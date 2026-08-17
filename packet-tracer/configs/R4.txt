@@ -1,0 +1,2 @@
+! Placeholder: thay bằng running-config export từ R4.
+

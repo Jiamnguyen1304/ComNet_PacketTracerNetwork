@@ -1,0 +1,13 @@
+* text=auto
+*.md text eol=lf
+*.txt text eol=lf
+*.html text eol=lf
+*.ps1 text eol=crlf
+*.pkt binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.mp4 binary
+*.zip binary
+
