@@ -1,2 +1,17 @@
-! Placeholder: thay bằng running-config export từ SW-HC.
+! DEPLOYMENT SCRIPT - paste vao CLI cua SW-HC
+enable
+configure terminal
+hostname SW-HC
+no ip domain-lookup
 
+interface GigabitEthernet0/1
+ description UPLINK_to_R1-G0/0
+ no shutdown
+exit
+
+end
+write memory
+
+! VERIFY
+show interfaces status
+show running-config

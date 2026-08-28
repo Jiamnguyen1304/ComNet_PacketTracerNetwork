@@ -7,7 +7,7 @@
 - Tên nhóm.
 - MSSV và họ tên hai thành viên.
 - Giá trị `XX` đã chọn.
-- Domain `mmt-XX.com`.
+- Giá trị `XX = 90` và domain `mmt-90.com`.
 - Phiên bản Cisco Packet Tracer thực tế sử dụng.
 
 ## 2. Phân công công việc
@@ -55,4 +55,3 @@ nguyên nhân gốc, cách sửa và kết quả retest.
 
 Đối chiếu kết quả với yêu cầu. Nêu hạn chế và đề xuất mở rộng trong tương lai,
 nhưng không đưa VLAN hoặc dynamic routing vào topology hiện tại.
-

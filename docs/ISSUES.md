@@ -3,7 +3,7 @@
 Báo cáo cuối cần ít nhất ba vấn đề có thật. Không bịa trước kết quả; dùng mẫu dưới
 đây trong lúc triển khai.
 
-## Issue 1 - TODO
+## Issue 1 - HUMAN_REQUIRED: ghi lỗi thật trong lúc tích hợp
 
 - Thời điểm:
 - Người phát hiện:
@@ -16,7 +16,7 @@ Báo cáo cuối cần ít nhất ba vấn đề có thật. Không bịa trư�
 - Retest:
 - Bài học/phòng ngừa:
 
-## Issue 2 - TODO
+## Issue 2 - HUMAN_REQUIRED: ghi lỗi thật trong lúc tích hợp
 
 - Thời điểm:
 - Người phát hiện:
@@ -29,7 +29,7 @@ Báo cáo cuối cần ít nhất ba vấn đề có thật. Không bịa trư�
 - Retest:
 - Bài học/phòng ngừa:
 
-## Issue 3 - TODO
+## Issue 3 - HUMAN_REQUIRED: ghi lỗi thật trong lúc tích hợp
 
 - Thời điểm:
 - Người phát hiện:
@@ -41,4 +41,3 @@ Báo cáo cuối cần ít nhất ba vấn đề có thật. Không bịa trư�
 - Cách sửa:
 - Retest:
 - Bài học/phòng ngừa:
-

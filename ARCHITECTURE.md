@@ -58,68 +58,68 @@ Servers -- SW-SRV - G0/0 R4 G0/1 --+
 
 | Segment | Router interface | Network | Gateway/router IP |
 |---|---|---|---|
-| Administration | `R1/G0/0` | `172.XX.10.0/27` | `172.XX.10.1` |
-| Staff Wi-Fi | `R1/G0/1` | `172.XX.20.0/27` | `172.XX.20.1` |
-| Technical | `R2/G0/0` | `172.XX.30.0/28` | `172.XX.30.1` |
-| Management | `R2/G0/1` | `172.XX.40.0/28` | `172.XX.40.1` |
-| Meeting Wi-Fi | `R3/G0/0` | `172.XX.50.0/27` | `172.XX.50.1` |
-| Server | `R4/G0/0` | `172.XX.60.0/28` | `172.XX.60.1` |
-| Backbone | `R1-4 backbone ports` | `172.XX.255.248/29` | `.249` đến `.252` |
+| Administration | `R1/G0/0` | `172.90.10.0/27` | `172.90.10.1` |
+| Staff Wi-Fi | `R1/G0/1` | `172.90.20.0/27` | `172.90.20.1` |
+| Technical | `R2/G0/0` | `172.90.30.0/28` | `172.90.30.1` |
+| Management | `R2/G0/1` | `172.90.40.0/28` | `172.90.40.1` |
+| Meeting Wi-Fi | `R3/G0/0` | `172.90.50.0/27` | `172.90.50.1` |
+| Server | `R4/G0/0` | `172.90.60.0/28` | `172.90.60.1` |
+| Backbone | `R1-4 backbone ports` | `172.90.255.248/29` | `.249` đến `.252` |
 
 Server được gán:
 
-- `DHCP-SRV`: `172.XX.60.10/28`.
-- `DNS-SRV`: `172.XX.60.11/28`.
-- `WEB-SRV`: `172.XX.60.12/28`.
-- Default gateway của cả ba: `172.XX.60.1`.
-- DNS của server: `172.XX.60.11` khi giao diện Packet Tracer cho phép.
+- `DHCP-SRV`: `172.90.60.10/28`.
+- `DNS-SRV`: `172.90.60.11/28`.
+- `WEB-SRV`: `172.90.60.12/28`.
+- Default gateway của cả ba: `172.90.60.1`.
+- DNS của server: `172.90.60.11` khi giao diện Packet Tracer cho phép.
 
 ## 5. Static routing
 
 Mỗi router có route explicit tới các mạng không trực tiếp kết nối. Next hop luôn
 là địa chỉ backbone của router đích sở hữu mạng đó:
 
-- R1 đi mạng tầng 2 qua `172.XX.255.250`.
-- R1 đi mạng tầng 3 qua `172.XX.255.251`.
-- R1 đi mạng tầng 4 qua `172.XX.255.252`.
-- R2 đi mạng tầng 1 qua `172.XX.255.249`.
-- R2 đi mạng tầng 3 qua `172.XX.255.251`.
-- R2 đi mạng tầng 4 qua `172.XX.255.252`.
-- R3 đi mạng tầng 1 qua `172.XX.255.249`.
-- R3 đi mạng tầng 2 qua `172.XX.255.250`.
-- R3 đi mạng tầng 4 qua `172.XX.255.252`.
-- R4 đi mạng tầng 1 qua `172.XX.255.249`.
-- R4 đi mạng tầng 2 qua `172.XX.255.250`.
-- R4 đi mạng tầng 3 qua `172.XX.255.251`.
+- R1 đi mạng tầng 2 qua `172.90.255.250`.
+- R1 đi mạng tầng 3 qua `172.90.255.251`.
+- R1 đi mạng tầng 4 qua `172.90.255.252`.
+- R2 đi mạng tầng 1 qua `172.90.255.249`.
+- R2 đi mạng tầng 3 qua `172.90.255.251`.
+- R2 đi mạng tầng 4 qua `172.90.255.252`.
+- R3 đi mạng tầng 1 qua `172.90.255.249`.
+- R3 đi mạng tầng 2 qua `172.90.255.250`.
+- R3 đi mạng tầng 4 qua `172.90.255.252`.
+- R4 đi mạng tầng 1 qua `172.90.255.249`.
+- R4 đi mạng tầng 2 qua `172.90.255.250`.
+- R4 đi mạng tầng 3 qua `172.90.255.251`.
 
 Không khai báo route tới mạng `connected`. Không bật dynamic routing.
 
 ## 6. DHCP
 
 `DHCP-SRV` giữ năm pool. Mỗi pool trả về gateway của chính subnet và DNS
-`172.XX.60.11`. Pool bắt đầu từ host `.10` để dành `.1-.9` cho gateway, AP và
+`172.90.60.11`. Pool bắt đầu từ host `.10` để dành `.1-.9` cho gateway, AP và
 hạ tầng tương lai.
 
 | Pool | Start IP | Mask | Gateway | Max users |
 |---|---|---|---|---:|
-| `POOL-ADMIN` | `172.XX.10.10` | `255.255.255.224` | `172.XX.10.1` | 10 |
-| `POOL-STAFF` | `172.XX.20.10` | `255.255.255.224` | `172.XX.20.1` | 20 |
-| `POOL-TECH` | `172.XX.30.10` | `255.255.255.240` | `172.XX.30.1` | 5 |
-| `POOL-MGMT` | `172.XX.40.10` | `255.255.255.240` | `172.XX.40.1` | 5 |
-| `POOL-MEETING` | `172.XX.50.10` | `255.255.255.224` | `172.XX.50.1` | 20 |
+| `POOL-ADMIN` | `172.90.10.10` | `255.255.255.224` | `172.90.10.1` | 10 |
+| `POOL-STAFF` | `172.90.20.10` | `255.255.255.224` | `172.90.20.1` | 20 |
+| `POOL-TECH` | `172.90.30.10` | `255.255.255.240` | `172.90.30.1` | 5 |
+| `POOL-MGMT` | `172.90.40.10` | `255.255.255.240` | `172.90.40.1` | 5 |
+| `POOL-MEETING` | `172.90.50.10` | `255.255.255.224` | `172.90.50.1` | 20 |
 
 ## 7. DNS và Web
 
-- DNS A record: `mmt-XX.com` -> `172.XX.60.12`.
-- DNS CNAME: `www.mmt-XX.com` -> `mmt-XX.com`.
+- DNS A record: `mmt-90.com` -> `172.90.60.12`.
+- DNS CNAME: `www.mmt-90.com` -> `mmt-90.com`.
 - HTTP bật trên `WEB-SRV`.
 - `index.html` phải hiển thị công ty, tên nhóm, `XX`, MSSV và họ tên.
-- Client nhận DNS bằng DHCP rồi truy cập `http://www.mmt-XX.com`.
+- Client nhận DNS bằng DHCP rồi truy cập `http://www.mmt-90.com`.
 
 ## 8. Wi-Fi
 
-- `AP-STAFF` phát `MMT-XX-STAFF`.
-- `AP-MEETING` phát `MMT-XX-MEETING`.
+- `AP-STAFF` phát `MMT-90-STAFF`.
+- `AP-MEETING` phát `MMT-90-MEETING`.
 - Cả hai dùng WPA2-PSK.
 - Mật khẩu thật không commit nếu nhóm coi đó là secret; báo cáo có thể che một
   phần nhưng demo phải chứng minh client kết nối được.

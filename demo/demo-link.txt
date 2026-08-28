@@ -1,2 +1,1 @@
-TODO: Thay dòng này bằng link video demo 6-10 phút có quyền xem công khai.
-
+HUMAN_REQUIRED: Thay dòng này bằng link video demo 6-10 phút có quyền xem công khai.

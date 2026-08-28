@@ -4,13 +4,13 @@
 
 | Thời lượng | Nội dung | Người nói |
 |---|---|---|
-| 0:00-0:45 | Giới thiệu nhóm, XX, domain, Packet Tracer version | Thành viên A |
-| 0:45-1:45 | Topology, subnet và backbone | Thành viên A |
-| 1:45-2:45 | Static routing và show ip route | Thành viên A |
-| 2:45-4:15 | DHCP server, năm pool và relay | Thành viên B |
-| 4:15-5:15 | DNS, WEB, SSID và WPA2 | Thành viên B |
-| 5:15-8:30 | Chạy các nhóm test trong test matrix | Cả hai |
-| 8:30-9:30 | Simulation Mode và kết luận | Cả hai |
+| 0:00-0:45 | Giới thiệu hai thành viên, XX = 90, mmt-90.com và phiên bản Packet Tracer | Duy |
+| 0:45-1:45 | Topology, subnet và backbone | Duy |
+| 1:45-2:45 | Static routing và `show ip route` | Duy |
+| 2:45-4:15 | DHCP server, năm pool và relay | Khôi |
+| 4:15-5:15 | DNS, WEB, hai SSID và WPA2 | Khôi |
+| 5:15-8:30 | Chạy các nhóm test trong test matrix | Duy và Khôi |
+| 8:30-9:30 | Simulation Mode và kết luận | Duy và Khôi |
 
 ## Checklist ghi hình
 
@@ -20,4 +20,3 @@
 - Mỗi thành viên thuyết minh ít nhất một phần.
 - Video nằm trong 6-10 phút.
 - Link chia sẻ được mở bằng cửa sổ ẩn danh nếu nộp link.
-

@@ -1,2 +1,38 @@
-! Placeholder: thay bằng running-config export từ R1.
+! DEPLOYMENT SCRIPT - paste vao CLI cua R1
+enable
+configure terminal
+hostname R1
+no ip domain-lookup
 
+interface GigabitEthernet0/0
+ description ADMIN_to_SW-HC
+ ip address 172.90.10.1 255.255.255.224
+ ip helper-address 172.90.60.10
+ no shutdown
+exit
+
+interface GigabitEthernet0/1
+ description STAFF_to_AP-STAFF
+ ip address 172.90.20.1 255.255.255.224
+ ip helper-address 172.90.60.10
+ no shutdown
+exit
+
+interface GigabitEthernet0/2
+ description BACKBONE_to_SW-CORE
+ ip address 172.90.255.249 255.255.255.248
+ no shutdown
+exit
+
+ip route 172.90.30.0 255.255.255.240 172.90.255.250
+ip route 172.90.40.0 255.255.255.240 172.90.255.250
+ip route 172.90.50.0 255.255.255.224 172.90.255.251
+ip route 172.90.60.0 255.255.255.240 172.90.255.252
+
+end
+write memory
+
+! VERIFY
+show ip interface brief
+show ip route
+show running-config

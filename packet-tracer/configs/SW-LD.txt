@@ -1,2 +1,17 @@
-! Placeholder: thay bằng running-config export từ SW-LD.
+! DEPLOYMENT SCRIPT - paste vao CLI cua SW-LD
+enable
+configure terminal
+hostname SW-LD
+no ip domain-lookup
 
+interface GigabitEthernet0/1
+ description UPLINK_to_R2-G0/1
+ no shutdown
+exit
+
+end
+write memory
+
+! VERIFY
+show interfaces status
+show running-config

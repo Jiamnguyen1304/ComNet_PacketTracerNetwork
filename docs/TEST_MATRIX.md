@@ -4,18 +4,18 @@
 
 | # | Source | Destination | Test | Expected | Actual | Evidence | Status |
 |---:|---|---|---|---|---|---|---|
-| 1 | PC-HC-01 | 172.XX.10.1 | ping | Success | TODO | T01 | TODO |
-| 2 | PC-HC-01 | PC-KT-01 | ping | Success | TODO | T02 | TODO |
-| 3 | PC-LD-01 | WEB-SRV | ping | Success | TODO | T03 | TODO |
-| 4 | LAP-MEETING-01 | PC-HC-01 | ping | Success | TODO | T04 | TODO |
-| 5 | LAP-STAFF-01 | PC-HC-01 | ping | Success | TODO | T05 | TODO |
-| 6 | Một client mỗi subnet động | Không áp dụng | ipconfig /all | Đúng pool/DHCP/DNS | TODO | T06A-E | TODO |
-| 7 | PC-KT-01 | mmt-XX.com | nslookup | Trả IP WEB-SRV | TODO | T07 | TODO |
-| 8 | PC-KT-01 | www.mmt-XX.com | nslookup | Trả IP WEB-SRV | TODO | T08 | TODO |
-| 9 | Client mỗi subnet | http://www.mmt-XX.com | Browser | Trang đúng nội dung | TODO | T09A-E | TODO |
-| 10 | R1-R4 | Không áp dụng | show ip route | Thấy mọi subnet | TODO | T10A-D | TODO |
-| 11 | R1 | 172.XX.255.252 | ping | Success | TODO | T11 | TODO |
-| 12 | LAP-MEETING-01 | Không áp dụng | ipconfig | Nhận IP MEETING | TODO | T12 | TODO |
+| 1 | PC-HC-01 | 172.90.10.1 | ping | Success | Chưa chạy | T01 | HUMAN_REQUIRED |
+| 2 | PC-HC-01 | PC-KT-01 | ping | Success | Chưa chạy | T02 | HUMAN_REQUIRED |
+| 3 | PC-LD-01 | 172.90.60.12 | ping | Success | Chưa chạy | T03 | HUMAN_REQUIRED |
+| 4 | LAP-MEETING-01 | PC-HC-01 | ping | Success | Chưa chạy | T04 | HUMAN_REQUIRED |
+| 5 | LAP-STAFF-01 | PC-HC-01 | ping | Success | Chưa chạy | T05 | HUMAN_REQUIRED |
+| 6 | Một client mỗi subnet động | Không áp dụng | ipconfig /all | Đúng pool, gateway và DNS | Chưa chạy | T06A-E | HUMAN_REQUIRED |
+| 7 | PC-KT-01 | mmt-90.com | nslookup | Trả 172.90.60.12 | Chưa chạy | T07 | HUMAN_REQUIRED |
+| 8 | PC-KT-01 | www.mmt-90.com | nslookup | Trả 172.90.60.12 | Chưa chạy | T08 | HUMAN_REQUIRED |
+| 9 | Một client mỗi subnet động | http://www.mmt-90.com | Browser | Trang đúng nội dung | Chưa chạy | T09A-E | HUMAN_REQUIRED |
+| 10 | R1-R4 | Không áp dụng | show ip route | Có connected/local và đủ static route | Chưa chạy | T10A-D | HUMAN_REQUIRED |
+| 11 | R1 | 172.90.255.252 | ping | Success | Chưa chạy | T11 | HUMAN_REQUIRED |
+| 12 | LAP-MEETING-01 | Không áp dụng | ipconfig | Nhận 172.90.50.10-29/27 | Chưa chạy | T12 | HUMAN_REQUIRED |
 
 ## Luồng Simulation Mode khuyến nghị
 

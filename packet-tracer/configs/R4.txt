@@ -1,2 +1,31 @@
-! Placeholder: thay bằng running-config export từ R4.
+! DEPLOYMENT SCRIPT - paste vao CLI cua R4
+enable
+configure terminal
+hostname R4
+no ip domain-lookup
 
+interface GigabitEthernet0/0
+ description SERVER_to_SW-SRV
+ ip address 172.90.60.1 255.255.255.240
+ no shutdown
+exit
+
+interface GigabitEthernet0/1
+ description BACKBONE_to_SW-CORE
+ ip address 172.90.255.252 255.255.255.248
+ no shutdown
+exit
+
+ip route 172.90.10.0 255.255.255.224 172.90.255.249
+ip route 172.90.20.0 255.255.255.224 172.90.255.249
+ip route 172.90.30.0 255.255.255.240 172.90.255.250
+ip route 172.90.40.0 255.255.255.240 172.90.255.250
+ip route 172.90.50.0 255.255.255.224 172.90.255.251
+
+end
+write memory
+
+! VERIFY
+show ip interface brief
+show ip route
+show running-config

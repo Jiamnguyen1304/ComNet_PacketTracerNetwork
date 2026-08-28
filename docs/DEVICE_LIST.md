@@ -23,16 +23,16 @@
 
 | Vị trí | Tên | Model | SSID | Bảo mật |
 |---|---|---|---|---|
-| Tầng 1 | AP-STAFF | Access Point-PT | MMT-XX-STAFF | WPA2-PSK |
-| Tầng 3 | AP-MEETING | Access Point-PT | MMT-XX-MEETING | WPA2-PSK |
+| Tầng 1 | AP-STAFF | Access Point-PT | MMT-90-STAFF | WPA2-PSK/AES |
+| Tầng 3 | AP-MEETING | Access Point-PT | MMT-90-MEETING | WPA2-PSK/AES |
 
 ## Server
 
 | Vị trí | Tên | Model | Vai trò | IP |
 |---|---|---|---|---|
-| Tầng 4 | DHCP-SRV | Server-PT | 5 DHCP pool | 172.XX.60.10/28 |
-| Tầng 4 | DNS-SRV | Server-PT | A + CNAME | 172.XX.60.11/28 |
-| Tầng 4 | WEB-SRV | Server-PT | HTTP | 172.XX.60.12/28 |
+| Tầng 4 | DHCP-SRV | Server-PT | 5 DHCP pool | 172.90.60.10/28 |
+| Tầng 4 | DNS-SRV | Server-PT | A + CNAME | 172.90.60.11/28 |
+| Tầng 4 | WEB-SRV | Server-PT | HTTP | 172.90.60.12/28 |
 
 ## End devices đề xuất
 
@@ -43,4 +43,3 @@
 | Technical | 2 PC-PT | PC-KT-01, PC-KT-02 |
 | Management | 1 PC-PT | PC-LD-01 |
 | Meeting Wi-Fi | 1 Laptop-PT, 1 Smartphone-PT | LAP-MEETING-01, PHONE-MEETING-01 |
-

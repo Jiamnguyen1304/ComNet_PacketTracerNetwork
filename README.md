@@ -10,7 +10,7 @@ WEB và hai mạng Wi-Fi bảo mật WPA2-PSK.
    [PROJECT_INFO.md](docs/PROJECT_INFO.md).
 2. Đọc [IMPLEMENTATION_GUIDE.md](docs/IMPLEMENTATION_GUIDE.md).
 3. Chốt [ADDRESSING_PLAN.md](docs/ADDRESSING_PLAN.md).
-4. Tạo `packet-tracer/topology.pkt` bằng Packet Tracer.
+4. Mở và hoàn thiện `topology.pkt` bằng Packet Tracer.
 5. Export running-config vào `packet-tracer/configs/`.
 6. Hoàn thiện báo cáo và đặt bản cuối tại `report/Report.pdf`.
 7. Thay nội dung `demo/demo-link.txt` bằng link video thật.
@@ -29,12 +29,13 @@ Packet_tracer_project/
 |   |-- DEVICE_LIST.md             Danh sách thiết bị
 |   |-- LOGICAL_TOPOLOGY.md        Bảng kết nối và port
 |   |-- TEST_MATRIX.md             Ma trận 12 bài kiểm thử
+|   |-- NEXT_STEPS.md              Checklist tích hợp và mục cần con người làm
 |   |-- WORK_PLAN.md               Phân công cho 2 thành viên
 |   `-- ISSUES.md                  Lỗi gặp phải và cách xử lý
 |-- packet-tracer/
-|   |-- topology.pkt               Tạo khi bắt đầu dựng mô hình
-|   |-- configs/                   Running-config của router và switch
+|   |-- configs/                   Script triển khai, sau đó thay bằng running-config
 |   `-- web/index.html             Nội dung website trên WEB-SRV
+|-- topology.pkt                   Topology Packet Tracer đang tích hợp
 |-- report/
 |   |-- REPORT_TEMPLATE.md         Khung nội dung báo cáo
 |   |-- SCREENSHOT_INDEX.md        Danh sách ảnh cần chụp
@@ -45,20 +46,20 @@ Packet_tracer_project/
     `-- demo-link.txt              Link video demo
 ```
 
-`topology.pkt` và `Report.pdf` chưa được tạo ở lần khởi tạo vì đây phải là file
-thật xuất từ Packet Tracer và phần mềm soạn báo cáo, không dùng file rỗng giả.
+`topology.pkt` đã có bản khung. `Report.pdf` chỉ được thêm sau khi xuất bản báo
+cáo thật; không dùng file rỗng giả.
 
 ## Thiết kế chính
 
 | Khu vực | Network | Gateway | Cấp IP |
 |---|---|---|---|
-| Hành chính tầng 1 | `172.XX.10.0/27` | `172.XX.10.1` | DHCP |
-| Wi-Fi tầng 1 | `172.XX.20.0/27` | `172.XX.20.1` | DHCP |
-| Kỹ thuật tầng 2 | `172.XX.30.0/28` | `172.XX.30.1` | DHCP |
-| Lãnh đạo tầng 2 | `172.XX.40.0/28` | `172.XX.40.1` | DHCP |
-| Wi-Fi phòng họp tầng 3 | `172.XX.50.0/27` | `172.XX.50.1` | DHCP |
-| Server tầng 4 | `172.XX.60.0/28` | `172.XX.60.1` | Static |
-| Backbone | `172.XX.255.248/29` | Không áp dụng | Static |
+| Hành chính tầng 1 | `172.90.10.0/27` | `172.90.10.1` | DHCP |
+| Wi-Fi tầng 1 | `172.90.20.0/27` | `172.90.20.1` | DHCP |
+| Kỹ thuật tầng 2 | `172.90.30.0/28` | `172.90.30.1` | DHCP |
+| Lãnh đạo tầng 2 | `172.90.40.0/28` | `172.90.40.1` | DHCP |
+| Wi-Fi phòng họp tầng 3 | `172.90.50.0/27` | `172.90.50.1` | DHCP |
+| Server tầng 4 | `172.90.60.0/28` | `172.90.60.1` | Static |
+| Backbone | `172.90.255.248/29` | Không áp dụng | Static |
 
 ## Quy tắc bắt buộc
 
@@ -67,19 +68,19 @@ thật xuất từ Packet Tracer và phần mềm soạn báo cáo, không dùng
 - Mỗi subnet nối vào một cổng router riêng.
 - Client tầng 1-3 phải nhận IP bằng DHCP.
 - DHCP đặt tập trung ở tầng 4 và phục vụ 5 pool qua `ip helper-address`.
-- Website phải truy cập bằng `www.mmt-XX.com`, không dùng IP khi nghiệm thu.
+- Website phải truy cập bằng `www.mmt-90.com`, không dùng IP khi nghiệm thu.
 - Hai SSID phải dùng Access Point-PT và WPA2-PSK.
 - Không dùng Home Wireless Router/WRT300N.
 
 ## File cần hoàn thiện trước khi nộp
 
 - `packet-tracer/topology.pkt`.
-- Chín file trong `packet-tracer/configs/` không còn dòng Placeholder.
+- Chín file trong `packet-tracer/configs/` phải được thay bằng output
+  `show running-config` thực tế sau khi tích hợp.
 - `report/Report.pdf`.
 - Ảnh minh chứng trong `report/images/`.
 - `demo/demo-link.txt` chứa link xem được.
-- Mọi `TODO` và `XX` trong bản nộp đã được thay đúng.
+- Mọi `HUMAN_REQUIRED` trong artifact nộp đã được xử lý bằng kết quả thật.
 
 Repository đã được khởi tạo trên nhánh `main` và có thể dùng cho lần push GitHub
 đầu tiên sau khi nhóm kiểm tra nội dung.
-

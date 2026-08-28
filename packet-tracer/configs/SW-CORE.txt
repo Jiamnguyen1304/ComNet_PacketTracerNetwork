@@ -1,2 +1,29 @@
-! Placeholder: thay bằng running-config export từ SW-CORE.
+! DEPLOYMENT SCRIPT - paste vao CLI cua SW-CORE
+enable
+configure terminal
+hostname SW-CORE
+no ip domain-lookup
 
+interface FastEthernet0/1
+ description BACKBONE_to_R1-G0/2
+ no shutdown
+exit
+interface FastEthernet0/2
+ description BACKBONE_to_R2-G0/2
+ no shutdown
+exit
+interface FastEthernet0/3
+ description BACKBONE_to_R3-G0/1
+ no shutdown
+exit
+interface FastEthernet0/4
+ description BACKBONE_to_R4-G0/1
+ no shutdown
+exit
+
+end
+write memory
+
+! VERIFY
+show interfaces status
+show running-config

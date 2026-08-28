@@ -1,2 +1,32 @@
-! Placeholder: thay bằng running-config export từ R3.
+! DEPLOYMENT SCRIPT - paste vao CLI cua R3
+enable
+configure terminal
+hostname R3
+no ip domain-lookup
 
+interface GigabitEthernet0/0
+ description MEETING_to_AP-MEETING
+ ip address 172.90.50.1 255.255.255.224
+ ip helper-address 172.90.60.10
+ no shutdown
+exit
+
+interface GigabitEthernet0/1
+ description BACKBONE_to_SW-CORE
+ ip address 172.90.255.251 255.255.255.248
+ no shutdown
+exit
+
+ip route 172.90.10.0 255.255.255.224 172.90.255.249
+ip route 172.90.20.0 255.255.255.224 172.90.255.249
+ip route 172.90.30.0 255.255.255.240 172.90.255.250
+ip route 172.90.40.0 255.255.255.240 172.90.255.250
+ip route 172.90.60.0 255.255.255.240 172.90.255.252
+
+end
+write memory
+
+! VERIFY
+show ip interface brief
+show ip route
+show running-config

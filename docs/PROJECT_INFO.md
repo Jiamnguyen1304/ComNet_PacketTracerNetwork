@@ -5,27 +5,29 @@
 
 | Biến | Giá trị |
 |---|---|
-| Tên nhóm | `TODO` |
-| Thành viên 1 - MSSV | `TODO` |
-| Thành viên 1 - Họ tên | `TODO` |
-| Thành viên 2 - MSSV | `TODO` |
-| Thành viên 2 - Họ tên | `TODO` |
-| MSSV được dùng để chọn XX | `TODO` |
-| XX | `TODO` |
-| Domain gốc | `mmt-XX.com` |
-| Domain web | `www.mmt-XX.com` |
-| SSID tầng 1 | `MMT-XX-STAFF` |
-| SSID tầng 3 | `MMT-XX-MEETING` |
-| WPA2 passphrase | Không commit, lưu ở nơi nhóm thống nhất |
-| Packet Tracer version | `TODO - phải từ 8.2 trở lên` |
-| Link GitHub nộp source | `TODO` |
-| Tên file nén nếu được yêu cầu | `TODO - xác nhận với giảng viên cho nhóm 2` |
-| Deadline | `TODO` |
+| Tên nhóm | `Nguyễn Vũ Đức Duy & Nguyễn Minh Khôi` |
+| Thành viên 1 - MSSV | `25127190` |
+| Thành viên 1 - Họ tên | `Nguyễn Vũ Đức Duy` |
+| Thành viên 2 - MSSV | `25127389` |
+| Thành viên 2 - Họ tên | `Nguyễn Minh Khôi` |
+| MSSV được dùng để chọn XX | `25127190` |
+| XX | `90` |
+| Domain gốc | `mmt-90.com` |
+| Domain web | `www.mmt-90.com` |
+| SSID tầng 1 | `MMT-90-STAFF` |
+| SSID tầng 3 | `MMT-90-MEETING` |
+| WPA2 passphrase lab | `MMT90@2026` |
+| Packet Tracer version | `HUMAN_REQUIRED - xem Help > About trên máy lưu topology cuối` |
+| Link GitHub nộp source | `https://github.com/Jiamnguyen1304/ComNet_PacketTracerNetwork` |
+| Tên file nén nếu được yêu cầu | `HUMAN_REQUIRED - xác nhận quy ước với giảng viên` |
+| Deadline | `HUMAN_REQUIRED - xác nhận trên LMS/thông báo lớp` |
 
 ## Quy tắc thay placeholder
 
 - Chỉ thay `XX` bằng đúng hai chữ số, giữ số 0 đầu nếu có.
 - Không dùng replace mù trên phần giải thích ký hiệu `XX`.
-- Sau khi thay, soát đủ địa chỉ `172.XX.*`, domain và SSID.
-- Mật khẩu Wi-Fi không đặt trùng MSSV hoặc thông tin cá nhân dễ đoán.
+- Địa chỉ thực tế của dự án phải bắt đầu bằng `172.90.*`; domain và SSID phải
+  dùng đúng hậu tố `90`.
+- Mật khẩu trong bảng chỉ dùng cho mô phỏng Packet Tracer, không tái sử dụng cho
+  tài khoản hoặc mạng thật.
 - Ghi lại phiên bản Packet Tracer thực tế dùng để save file cuối.
