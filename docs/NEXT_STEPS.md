@@ -32,6 +32,14 @@
 
 Không chụp lại các ảnh đã có trừ khi topology bị sửa sau thời điểm này.
 
+## 1.1. Sửa ba điểm nhìn thấy trong ảnh 18:11 trước khi test
+
+- [ ] Tầng 4: xóa PC18, PC19, PC20; giữ bảy PC và ba server, tổng 10 host.
+- [ ] Đổi display name client theo bảng trong `CURRENT_TOPOLOGY_AUDIT.md`.
+- [ ] Đổi nhãn có dây tầng 1 từ “Phòng quản trị” thành “Phòng hành chính”.
+- [ ] Thêm sáu label LAN và một label backbone chứa network/prefix/gateway.
+- [ ] Save topology, chờ link xanh và chụp lại ảnh từng tầng sau khi sửa.
+
 ## 2. Chuẩn bị một phiên kiểm thử sạch
 
 1. Đóng các cửa sổ hoặc bản Packet Tracer cũ để tránh save nhầm.
@@ -70,9 +78,8 @@ Phần này là audit theo bố cục dọc hiện tại, không phải cấu h�
 - [ ] Kiểm tra nhánh tầng 4: SW-SRV nối cụm host có dây và ba server vào R4/G0/0.
 - [ ] Đối chiếu số host: ADMIN 10 PC; TECH 5 PC; MGMT tối đa 5 PC. STAFF và
   MEETING chỉ cần có wireless client đại diện nhưng phải association thật.
-- [ ] Đếm tầng 4: tối đa 10 host tính cả ba server, tức tối đa bảy PC/host bổ
-  sung. Chúng dùng `.40.5-.40.11`; chỉ mở rộng tới `.40.14` nếu giảng viên xác
-  nhận 10 máy là ngoài ba server. Tất cả đều static và không được trùng IP.
+- [ ] Đếm tầng 4: đúng bảy `SRV-PC` và ba server. Các PC dùng `.40.5-.40.11`,
+  tất cả static và không trùng IP.
 - [ ] R1 CLI chạy `ping 172.90.255.4`; chụp `T11-r1-to-r4-backbone.png` khi
   thành công 5/5.
 - [ ] Nếu bất kỳ link hoặc test nào fail, chẩn đoán trước khi đụng đến route:

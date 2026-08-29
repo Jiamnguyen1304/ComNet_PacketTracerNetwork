@@ -4,6 +4,10 @@ Duy viết report trên Prism; Khôi chịu trách nhiệm chạy toàn bộ ph�
 Tracer và cung cấp ảnh thật. Tất cả ảnh đặt trong `report/images/`. Không tạo
 ảnh giả và không đánh PASS nếu chưa quan sát kết quả.
 
+Ba ảnh chụp lúc 18:11 nằm trong `report/images/audit/`. Chúng chứng minh trạng
+thái trước sửa nhưng còn 13 host tầng 4, nhãn tầng 1 sai và thiếu network label,
+vì vậy không dùng thay D01-F1..F4 cuối.
+
 ## 1. Ảnh đã có - không cần chụp lại
 
 | ID | Nội dung đã chứng minh | File | Trạng thái |

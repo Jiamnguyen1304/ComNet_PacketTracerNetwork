@@ -55,8 +55,7 @@ PC/host trong `.40.5-.40.11`; dùng gateway `172.90.40.1` và DNS `172.90.40.3`.
 | Dự phòng | `172.90.40.12-172.90.40.14` | 3 | Không gán nếu đề không yêu cầu |
 
 `/28` có 14 địa chỉ usable. Gateway + tối đa 10 host sử dụng 11 địa chỉ, còn ba
-địa chỉ dự phòng. Nếu giảng viên xác nhận “10 máy” là ngoài ba service server,
-có thể mở rộng client đến `.40.14`, nhưng khi đó subnet sẽ kín hoàn toàn.
+địa chỉ `.40.12-.40.14` dự phòng và không được gán trong thiết kế cuối.
 
 ## DHCP relay
 

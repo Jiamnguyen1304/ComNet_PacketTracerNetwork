@@ -14,6 +14,18 @@
   sau mỗi lần đổi bố cục phải review `LOGICAL_TOPOLOGY.md`, `DEVICE_LIST.md` và
   `SCREENSHOT_INDEX.md`.
 
+## Issue 5 - Tầng 4 vượt giới hạn host và canvas khó dùng khi nghiệm thu
+
+- Thời điểm: 2026-08-29 18:11, khi review ba ảnh zoom topology.
+- Triệu chứng: tầng 4 có PC11-PC20 cùng DHCP/DNS/WEB server, tổng 13 host trong
+  khi đề giới hạn tối đa 10 host; nhãn tầng 1 ghi “Phòng quản trị”; canvas chưa
+  có network/prefix/gateway label và client có nhiều tên trùng dạng `(1)`.
+- Quyết định: tính Server-PT là host; xóa PC18-PC20, giữ bảy PC và ba server;
+  đổi tên endpoint theo khu vực, đổi nhãn tầng 1 thành “Phòng hành chính” và bổ
+  sung label cho sáu LAN cùng backbone.
+- Retest bắt buộc: kiểm đếm lại, kiểm tra IP static `.40.5-.40.11`, chờ link
+  xanh, chụp lại D01-F1..F4 rồi mới chạy test matrix.
+
 ## Issue 1 - Tài liệu dịch vụ lệch address plan của topology cuối
 
 - Thời điểm: 2026-08-29, sau khi pull bản hoàn chỉnh từ DuyVu.

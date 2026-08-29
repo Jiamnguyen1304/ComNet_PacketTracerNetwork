@@ -90,8 +90,7 @@ Server được gán:
 
 Theo nghĩa mạng chuẩn, “tối đa 10 host” bao gồm cả ba server. Vì vậy tầng 4 chỉ
 nên có tối đa bảy PC/host bổ sung, dùng `.40.5-.40.11`; `.40.12-.40.14` để dự
-phòng. Chỉ dùng đủ 10 PC ngoài ba server nếu giảng viên đã xác nhận cách hiểu đó;
-trong mọi trường hợp không được để hai thiết bị trùng IP.
+phòng. Thiết kế cuối không vượt quá 10 endpoint và không để hai thiết bị trùng IP.
 
 ## 5. Static routing
 

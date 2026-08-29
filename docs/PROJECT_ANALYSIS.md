@@ -18,8 +18,7 @@ và demo có thuyết minh.
 | 4 | Server room | Tối đa 10 host | Wired | Static |
 
 Trong bảng này, `host` là mọi endpoint có địa chỉ IP, bao gồm Server-PT. Vì đã
-có ba service server, tầng 4 còn tối đa bảy PC/host bổ sung nếu không có xác
-nhận khác từ giảng viên.
+có ba service server, tầng 4 còn tối đa bảy PC/host bổ sung.
 
 ## Thiết bị bắt buộc
 

@@ -38,13 +38,12 @@
 
 | Subnet | Cụm thiết bị thể hiện trên canvas | Mục cần xác nhận |
 |---|---|---|
-| ADMIN | Cụm PC-PT có dây qua SW-HC | Có đủ 10 PC và tất cả dùng DHCP |
-| STAFF | Các wireless client qua AP-STAFF | Đúng SSID; ít nhất một client nhận DHCP |
-| TECH | Cụm PC-PT có dây qua SW-KT | Có đủ 5 PC và tất cả dùng DHCP |
-| MGMT | Cụm PC-PT có dây qua SW-LD | Không quá 5 PC và tất cả dùng DHCP |
-| MEETING | Các wireless client qua AP-MEETING | Đúng SSID; ít nhất một client nhận DHCP |
-| SERVER | Tối đa 7 PC/host có dây cùng 3 Server-PT qua SW-SRV | Tổng tối đa 10 host; tất cả static, không trùng IP |
+| ADMIN | 10 PC qua SW-HC | Đổi thành `ADMIN-PC01..10`; tất cả DHCP |
+| STAFF | 3 smartphone qua AP-STAFF | Đổi thành `STAFF-PHONE01..03`; đúng SSID và DHCP |
+| TECH | 5 PC qua SW-KT | Đổi thành `TECH-PC01..05`; tất cả DHCP |
+| MGMT | 5 PC qua SW-LD | Đổi thành `MGMT-PC01..05`; tất cả DHCP |
+| MEETING | 1 smartphone + 1 laptop qua AP-MEETING | `MEETING-PHONE01`, `MEETING-LAPTOP01`; DHCP |
+| SERVER | 7 PC cùng 3 Server-PT qua SW-SRV | `SRV-PC01..07`; tổng 10 host, tất cả static |
 
-Ảnh overview hiện tại bị thu nhỏ nên không dùng nó để khẳng định display name
-hoặc đếm từng wireless client. Hai việc đó phải được xác nhận trực tiếp trong
-Packet Tracer trước khi chốt inventory.
+Ảnh 18:11 cho thấy tầng 4 ban đầu có 10 PC + 3 server. Quyết định cuối là xóa
+PC18-PC20 để còn bảy PC + ba server; sau khi sửa phải chụp lại ảnh D01-F4.
