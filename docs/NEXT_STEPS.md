@@ -25,6 +25,23 @@ Nguồn chuẩn:
 
 Không tự thay address plan trong lúc sửa lỗi.
 
+### 0.1. Quy tắc chụp minh chứng trong lúc làm
+
+- Toàn bộ ảnh và kết quả kiểm tra cũ đã được reset. **Không kế thừa bất kỳ
+  trạng thái PASS nào**; phải chạy lại từ đầu và chụp ảnh mới theo thứ tự tài
+  liệu này.
+- Lưu mọi ảnh cuối vào `report/images/`; ảnh lỗi tạm đặt trong
+  `report/images/audit/` hoặc thêm hậu tố `-debug`.
+- Dùng `Win + Shift + S` hoặc công cụ chụp màn hình, lưu PNG ngay sau khi test.
+- Tên file phải đúng mã `D01`, `Cxx`, `Txx` hoặc `SIM` ghi trong từng bước.
+- Ảnh CLI phải thấy tên cửa sổ thiết bị, lệnh, IP đích và dòng kết quả.
+- Ảnh GUI phải thấy tên thiết bị và đủ IP/mask/gateway/DNS hoặc trạng thái
+  service liên quan.
+- Không crop mất source device, không để chữ quá nhỏ và không để lộ passphrase.
+- Chỉ chụp ảnh PASS sau khi sửa xong. Ảnh `before-fix` không dùng cho report.
+- Mọi mã ảnh trong tài liệu đều đang ở trạng thái **chưa chụp**. Không đánh dấu
+  hoàn thành chỉ vì cấu hình nhìn có vẻ đúng.
+
 ---
 
 ## 1. Tạo checkpoint và mở đúng file
@@ -54,8 +71,8 @@ Không tiếp tục nếu đang mở nhầm bản copy hoặc có link đỏ ch�
 
 ### 2.1. Giảm tầng 4 còn đúng 10 host
 
-Ảnh audit lúc 18:11 cho thấy tầng 4 có 10 PC và 3 server, tổng 13 host. Quyết
-định cuối là tính Server-PT như host.
+Kiểm tra trực tiếp topology hiện tại. Nếu tầng 4 còn 10 PC và 3 server thì tổng
+là 13 host. Quyết định cuối là tính Server-PT như host.
 
 1. Chọn công cụ Delete hoặc chọn thiết bị rồi nhấn Delete.
 2. Xóa `PC18`, `PC19`, `PC20` cùng ba cable tương ứng.
@@ -111,6 +128,18 @@ DNS-SRV, WEB-SRV, AP-STAFF hoặc AP-MEETING.
 
 Save `topology.pkt` sau khi hoàn tất phần 2.
 
+> **📸 CHỤP SAU PHẦN 2**
+>
+> - `D01-topology.png`: overview thấy bốn tầng và bốn nhánh về SW-CORE.
+> - `D01-F1.png`: tầng 1 sau khi đổi thành Phòng hành chính và thêm label.
+> - `D01-F2.png`: tầng 2, thấy riêng MGMT và TECH.
+> - `D01-F3.png`: tầng 3, AP-MEETING và hai wireless client.
+> - `D01-F4.png`: tầng 4 chỉ còn 7 PC + 3 server.
+> - `C02-backbone.png`: zoom SW-CORE với bốn link router đều xanh.
+>
+> Đây phải là ảnh mới chụp sau khi đã kiểm tra/sửa topology trong phiên hiện
+> tại; không dùng ảnh từ lần kiểm tra trước.
+
 ---
 
 ## 3. Cấu hình toàn bộ host tĩnh tầng 4
@@ -146,11 +175,19 @@ ping 172.90.40.4
 Nếu ping local fail, kiểm tra cable, IP trùng, mask và gateway; chưa kiểm tra
 static route ở bước này vì các đích đều cùng subnet.
 
+> **📸 CHỤP SAU PHẦN 3**
+>
+> - `C10A-SRV-PC01-static.png`: IP Configuration của SRV-PC01 thấy `.40.5/28`,
+>   gateway `.40.1` và DNS `.40.3`.
+> - `C10B-SRV-PC01-local-ping.png`: SRV-PC01 ping `.40.1-.40.4` thành công.
+
 ---
 
 ## 4. Kiểm tra router và static routing
 
-Router hiện đã có cấu hình đúng. Chỉ sửa khi output khác bảng dưới.
+Kiểm tra lại cả bốn router từ đầu, dù cấu hình export hiện có vẻ đúng. Các file
+trong `packet-tracer/configs/` chỉ là mốc đối chiếu; chỉ công nhận PASS khi output
+trực tiếp trong `topology.pkt` khớp bảng dưới.
 
 ### 4.1. Expected interface
 
@@ -178,6 +215,16 @@ show running-config | include helper-address
 - Tất cả helper là `172.90.40.2`.
 - Không có RIP, OSPF hoặc EIGRP.
 
+> **📸 MINH CHỨNG ROUTER**
+>
+> - Chụp mới `C01-T10A-R1-interface-route.png` đến
+>   `C01-T10D-R4-interface-route.png` sau khi chạy lại interface/route trên từng
+>   router.
+> - Chụp mới `C04A-R1-dhcp-helper.png`, `C04B-R2-dhcp-helper.png` và
+>   `C04C-R3-dhcp-helper.png` sau khi chạy lại lệnh helper.
+> - Mỗi ảnh phải thấy tên router, lệnh và toàn bộ output liên quan. Nếu một ảnh
+>   không đủ chỗ, chụp hai ảnh rồi thêm hậu tố `-1`, `-2`.
+
 Nếu cấu hình khác, không viết lại bằng trí nhớ. Mở file tương ứng trong
 `packet-tracer/configs/`, copy phần interface/route bị thiếu và paste vào CLI.
 
@@ -201,6 +248,12 @@ ping 172.90.40.2
 Tất cả phải thành công. Ping đầu tiên có thể mất một gói vì ARP; chạy lại trước
 khi kết luận lỗi.
 
+> **📸 CHỤP LẠI TỪ ĐẦU:**
+>
+> - `T11-r1-to-r4-backbone.png`: R1 ping `172.90.255.4` thành công.
+> - `S01A-R1-to-dhcp.png` đến `S01D-R4-to-dhcp.png`: trên từng router ping
+>   `172.90.40.2` thành công 5/5.
+
 ### 4.3. Kiểm tra switch
 
 Trên SW-CORE, SW-HC, SW-KT, SW-LD và SW-SRV:
@@ -217,6 +270,10 @@ Yêu cầu:
 - Các port access vẫn ở VLAN 1 mặc định.
 - Không tạo thêm VLAN hoặc IP quản trị nếu đề không yêu cầu.
 - Port đang cắm cable phải hoạt động.
+
+Không bắt buộc chụp riêng switch nếu D01-F1..F4 và C02 đã thấy rõ toàn bộ link.
+Nếu từng sửa VLAN/port, chụp thêm `C03-switch-vlan-brief.png` để chứng minh các
+port vẫn ở VLAN 1 mặc định.
 
 ---
 
@@ -248,6 +305,15 @@ bảng; nhấn Save sau mỗi pool. Không tạo pool trùng tên.
 
 `serverPool` là pool mặc định không xóa được. Giữ nguyên nhưng không dùng cho
 client. SERVER subnet không có DHCP client.
+
+> **📸 CHỤP SAU PHẦN 5**
+>
+> - Chụp mới `C05A-dhcp-server-ip.png`: IP/mask/gateway/DNS của DHCP-SRV.
+> - Chụp mới `C05B-dhcp-pools.png`: DHCP On và thấy đủ năm pool nghiệp vụ.
+> - `C05C-pool-staff.png`: thấy start `.11.4`, `/27`, gateway `.11.1`, DNS
+>   `.40.3`, max 20.
+> - `C05D-pool-meeting.png`: thấy start `.30.4`, `/27`, gateway `.30.1`, DNS
+>   `.40.3`, max 20.
 
 ---
 
@@ -285,6 +351,11 @@ Host Name: mmt-90.com
 Không tạo A record `www` trỏ sang IP khác. Nếu record cũ sai, xóa record sai và
 thêm lại hai record trên.
 
+> **📸 CHỤP SAU PHẦN 6**
+>
+> - `C06A-dns-server-ip.png`: IP tĩnh của DNS-SRV.
+> - `C06B-dns-records.png`: Service On, A record và CNAME cùng xuất hiện.
+
 ---
 
 ## 7. Hoàn thiện WEB-SRV
@@ -314,6 +385,13 @@ DNS Server      172.90.40.3
    - Nguyễn Minh Khôi - 25127389.
 
 Không cần bật HTTPS nếu đề không yêu cầu.
+
+> **📸 CHỤP SAU PHẦN 7**
+>
+> - `C07A-web-server-ip.png`: IP/mask/gateway/DNS của WEB-SRV.
+> - `C07B-web-http.png`: HTTP On và editor `index.html` có nội dung nhóm.
+> - `C07C-web-content.png` chụp sau khi client mở website bằng domain ở phần
+>   10.4; không chụp bằng IP.
 
 ---
 
@@ -365,6 +443,12 @@ Với MEETING-PHONE01 và MEETING-LAPTOP01, làm tương tự nhưng chọn
 
 Đường association dạng chấm phải xuất hiện từ client đến đúng AP.
 
+> **📸 CHỤP SAU PHẦN 8**
+>
+> - `C08-ap-staff.png`: thấy SSID `MMT-90-STAFF`, WPA2-PSK và AES.
+> - `C09-ap-meeting.png`: thấy SSID `MMT-90-MEETING`, WPA2-PSK và AES.
+> - Che hoặc crop trường passphrase nhưng vẫn giữ tên thiết bị và security mode.
+
 ---
 
 ## 9. Cho toàn bộ client tầng 1-3 nhận DHCP
@@ -390,13 +474,28 @@ dùng mục IP Configuration của Wireless0 nếu giao diện không có Deskto
 | MGMT | `172.90.21.5-.9` | `255.255.255.240` | `172.90.21.1` | `172.90.40.3` |
 | MEETING | `172.90.30.4-.23` | `255.255.255.224` | `172.90.30.1` | `172.90.40.3` |
 
-Trên ít nhất một client mỗi nhóm chạy:
+Trên ít nhất một PC/laptop đại diện mỗi nhóm chạy:
 
 ```text
 ipconfig /all
 ```
 
 Nếu nhận `169.254.x.x`, DHCP đã fail. Không gán IP tĩnh để che lỗi.
+Smartphone không có Command Prompt thì mở `Config > Wireless0` hoặc màn hình
+IP Configuration và kiểm tra trực tiếp IP, mask, gateway, DNS.
+
+> **📸 CHỤP SAU PHẦN 9**
+>
+> Chạy `ipconfig /all` trên PC/laptop đại diện và lưu:
+>
+> - `T06A-admin-dhcp.png` — ADMIN-PC01.
+> - `T06B-staff-dhcp.png` — STAFF-PHONE01; nếu điện thoại không có CLI, chụp
+>   màn hình Wireless0/IP Configuration có đủ bốn trường.
+> - `T06C-tech-dhcp.png` — TECH-PC01.
+> - `T06D-mgmt-dhcp.png` — MGMT-PC01.
+> - `T06E-meeting-dhcp.png` — MEETING-LAPTOP01; ảnh này dùng lại cho T12.
+>
+> Mỗi ảnh phải thấy IP, mask, gateway và DNS `.40.3`.
 
 ---
 
@@ -415,8 +514,14 @@ MEETING-LAPTOP01 -> ping 172.90.30.1
 SRV-PC01    -> ping 172.90.40.1
 ```
 
+Nếu smartphone không có Command Prompt, dùng Add Simple PDU từ smartphone tới
+đích và chỉ công nhận PASS khi Simulation/Event List báo Successful; không thêm
+thiết bị mới chỉ để tạo ảnh CLI.
+
 Nếu fail ở đây, lỗi nằm ở local IP/mask, cable, Wi-Fi association hoặc cổng
 router; chưa cần kiểm tra static route.
+
+> **📸 CHỤP:** `T01-admin-to-gateway.png` khi ADMIN-PC01 ping `.10.1` thành công.
 
 ### 10.2. Liên subnet
 
@@ -432,6 +537,15 @@ SRV-PC01 -> ping <IP-MGMT-PC01>
 
 Tất cả phải thành công. Nếu local gateway PASS nhưng remote fail, kiểm tra
 static route và đường trả về trên router đích.
+
+> **📸 CHỤP SAU TEST LIÊN SUBNET**
+>
+> - `T02-admin-to-tech.png`.
+> - `T03-mgmt-to-web.png`.
+> - `T04-meeting-to-admin.png`.
+> - `T05-staff-to-admin.png`.
+>
+> Ảnh phải thấy lệnh ping dùng IP thật của client sau DHCP.
 
 ### 10.3. DNS
 
@@ -450,6 +564,9 @@ ping mmt-90.com
 ping www.mmt-90.com
 ```
 
+> **📸 CHỤP:** `T07-dns-a.png` và `T08-dns-cname.png`, mỗi ảnh thấy tên miền
+> truy vấn và kết quả `172.90.40.4`.
+
 ### 10.4. Website bằng domain
 
 Mở Web Browser trên một client đại diện của từng mạng động và nhập:
@@ -460,6 +577,17 @@ http://www.mmt-90.com
 
 Chạy từ ADMIN, STAFF, TECH, MGMT và MEETING. Không nghiệm thu bằng
 `http://172.90.40.4`.
+
+> **📸 CHỤP WEBSITE TỪ NĂM SUBNET**
+>
+> - `T09A-web-admin.png`.
+> - `T09B-web-staff.png`.
+> - `T09C-web-tech.png`.
+> - `T09D-web-mgmt.png`.
+> - `T09E-web-meeting.png`.
+>
+> Để URL `http://www.mmt-90.com` và nội dung nhóm cùng xuất hiện. Một trong năm
+> ảnh có thể dùng lại làm `C07C-web-content.png` nếu source device nhìn rõ.
 
 ### 10.5. Bộ test cuối
 
@@ -480,6 +608,27 @@ Chạy từ ADMIN, STAFF, TECH, MGMT và MEETING. Không nghiệm thu bằng
 
 Ghi kết quả thật vào `docs/TEST_MATRIX.md`. Việc viết phần thuyết minh report
 không thuộc phạm vi tài liệu này.
+
+### 10.6. Chụp luồng Simulation Mode để dùng sau
+
+Phần này không phải viết report, chỉ lưu bằng chứng gói tin khi mô hình đã PASS.
+
+**Luồng DHCP:**
+
+1. Chuyển sang Simulation và Edit Filters, giữ ARP/DHCP.
+2. Trên ADMIN-PC01, chọn Static rồi chọn lại DHCP.
+3. Capture/Forward đến khi thấy Discover, Offer, Request, ACK qua R1 và
+   DHCP-SRV `172.90.40.2`.
+4. Chụp event list/PDU thành `SIM-DHCP.png`.
+
+**Luồng DNS/HTTP:**
+
+1. Xóa event cũ; lọc ARP, DNS, TCP và HTTP.
+2. Trên TECH-PC01 mở `http://www.mmt-90.com`.
+3. Capture/Forward đến khi thấy DNS tới `.40.3`, rồi TCP/HTTP tới `.40.4`.
+4. Chụp `SIM-DNS-HTTP.png`.
+
+Sau khi chụp, chuyển lại Realtime.
 
 ---
 
@@ -557,6 +706,9 @@ TECH-PC01 -> mở http://www.mmt-90.com
 
 Nếu bốn test PASS thì trạng thái đã được lưu đúng.
 
+> **📸 TÙY CHỌN NHƯNG NÊN CÓ:** `S02-final-smoke.png` chứa một kết quả sau khi
+> đóng/mở lại file, ưu tiên website bằng domain hoặc DNS lookup.
+
 ### 12.4. Export running-config
 
 Trên từng router/switch:
@@ -625,3 +777,32 @@ lại switch/router config. Chỉ export lại thiết bị mạng đã thực s
 Khi tất cả ô trên hoàn thành, phần mô phỏng kỹ thuật của đồ án đã hoàn thành ở
 mức thô. Report, ảnh trình bày, video demo, link chia sẻ và đóng gói nộp bài là
 giai đoạn riêng, không thực hiện trong tài liệu này.
+
+---
+
+## 14. Checklist ảnh minh chứng đã thu thập
+
+Đánh dấu ngay khi file PNG đã nằm trong `report/images/` và mở được.
+
+### Tất cả phải chụp mới sau khi kiểm tra lại từ đầu
+
+- [ ] D01 overview và D01-F1, D01-F2, D01-F3, D01-F4.
+- [ ] C02 backbone.
+- [ ] C01/T10A-D: interface và route table R1-R4.
+- [ ] C04A-C: năm DHCP helper trên R1-R3.
+- [ ] S01A-D: R1-R4 ping DHCP-SRV thành công.
+- [ ] C10A-B host tĩnh tầng 4.
+- [ ] C05A-B: IP DHCP-SRV và danh sách năm pool.
+- [ ] C05C-D chi tiết STAFF/MEETING pool.
+- [ ] C06A-B DNS.
+- [ ] C07A-C WEB.
+- [ ] C08-C09 Wi-Fi.
+- [ ] T01-T05 ping.
+- [ ] T06A-E DHCP; T06E dùng lại cho T12.
+- [ ] T07-T08 DNS lookup.
+- [ ] T09A-E website từ năm subnet.
+- [ ] T11 backbone ping.
+- [ ] SIM-DHCP và SIM-DNS-HTTP.
+
+Trước khi dừng phiên làm việc, mở ngẫu nhiên ít nhất ba ảnh và kiểm tra chữ đủ
+rõ. Danh sách caption/trạng thái chi tiết nằm trong `report/SCREENSHOT_INDEX.md`.

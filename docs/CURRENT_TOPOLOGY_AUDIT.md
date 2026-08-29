@@ -16,13 +16,17 @@ Tracer; report do Duy thực hiện trên Prism.
 Kiến trúc logic vẫn là bảy subnet vật lý riêng; việc xoay và xếp lại canvas
 không làm thay đổi địa chỉ hoặc static route.
 
-## Kết quả đọc từ ba ảnh lúc 18:11
+## Quan sát lịch sử từ lần kiểm tra trước
+
+Phần này chỉ giải thích nguồn gốc các quyết định sửa, **không phải kết quả
+nghiệm thu hiện tại**. Toàn bộ ảnh cũ đã bị xóa khỏi working tree và mọi mục
+phải được kiểm tra/chụp lại theo `docs/NEXT_STEPS.md`.
 
 | Hạng mục | Quan sát thực tế | Kết luận |
 |---|---|---|
-| Link có dây | Các tam giác trạng thái đều xanh | PASS vật lý tại thời điểm chụp |
-| Wireless tầng 3 | Smartphone10(3) và Laptop0 association AP-MEETING | PASS association, chưa chứng minh DHCP |
-| Wireless tầng 1 | Ba smartphone association AP-STAFF | PASS association, chưa chứng minh DHCP |
+| Link có dây | Các tam giác trạng thái từng xanh | Quan sát cũ; phải kiểm lại |
+| Wireless tầng 3 | Smartphone10(3) và Laptop0 từng association AP-MEETING | Quan sát cũ; phải kiểm lại DHCP |
+| Wireless tầng 1 | Ba smartphone từng association AP-STAFF | Quan sát cũ; phải kiểm lại DHCP |
 | ADMIN | 10 PC qua SW-HC | Đủ số lượng; cần đổi display name |
 | MGMT | 5 PC PC21-PC25 qua SW-LD | Đủ số lượng; cần đổi display name |
 | TECH | 5 PC tên có hậu tố `(1)` qua SW-KT | Đủ số lượng; tên dễ nhầm |
@@ -30,8 +34,8 @@ không làm thay đổi địa chỉ hoặc static route.
 | Nhãn tầng 1 | Ghi “Phòng quản trị” | Sai/nhầm với MGMT; đổi thành “Phòng hành chính” |
 | Nhãn mạng | Chưa thấy network/prefix/gateway trên canvas | Cần bổ sung trước ảnh cuối |
 
-Ba ảnh gốc đã được lưu trong `report/images/audit/` với hậu tố
-`before-fix`; không sử dụng chúng làm ảnh nghiệm thu cuối.
+Ba ảnh `before-fix` cũ đã được xóa theo yêu cầu. Nếu cần chẩn đoán lỗi mới, có
+thể tạo lại `report/images/audit/`, nhưng ảnh debug không dùng làm nghiệm thu.
 
 ## Quyết định sửa an toàn đã chốt
 
