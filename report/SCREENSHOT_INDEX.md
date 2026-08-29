@@ -1,125 +1,96 @@
-# Danh sách ảnh Khôi cần bàn giao cho report
+# Manifest ảnh nghiệm thu cuối
 
-Duy viết report trên Prism; Khôi chạy toàn bộ phần Packet Tracer và cung cấp ảnh
-thật. Tất cả ảnh đặt trong `report/images/`. Bộ ảnh cũ đã được xóa theo yêu cầu
-ngày 29/08/2026, vì vậy **không có ảnh nào được mặc định PASS**. Mọi hàng dưới
-đây đều phải chạy và chụp lại từ đầu trên `topology.pkt` cuối.
+Bộ ảnh được chụp từ `topology.pkt` cuối ngày 29-30/08/2026. Có 51 ảnh PNG duy
+nhất sau khi loại bản sao `T06E-meeting-dhcp - Copy.png`. Prism phải dùng tên
+file để ánh xạ, không hiển thị tên file thô trong caption cuối.
 
-Không tạo ảnh giả, không dùng ảnh `before-fix` và không đánh PASS nếu chưa quan
-sát trực tiếp kết quả. Nếu test lỗi, ảnh chẩn đoán phải có hậu tố `-debug` và
-không được dùng làm ảnh nghiệm thu.
+## 1. Topology và host tĩnh
 
-## 1. Thứ tự chụp bắt buộc
-
-Thực hiện theo thứ tự: topology -> host tĩnh -> router/helper/backbone -> DHCP ->
-DNS -> WEB -> Wi-Fi -> DHCP client -> ping -> DNS/HTTP -> Simulation. Trình tự
-này tránh chụp một cấu hình còn bị thay đổi ở bước sau.
-
-### A. Topology và thiết kế vật lý
-
-| ID/file | Màn hình phải thấy | Điều kiện PASS | Trạng thái |
+| File | Nội dung | Vị trí report | Trạng thái |
 |---|---|---|---|
-| `D01-topology.png` | Overview bố cục dọc | Từ trên xuống tầng 4, 3, 2, 1; bốn router nối SW-CORE | CẦN CHỤP |
-| `D01-F1.png` | Zoom tầng 1 | ADMIN, STAFF, R1, SW-HC, AP, endpoint và label đúng | CẦN CHỤP |
-| `D01-F2.png` | Zoom tầng 2 | TECH, MGMT, R2 và hai access switch | CẦN CHỤP |
-| `D01-F3.png` | Zoom tầng 3 | MEETING, R3, AP và wireless client | CẦN CHỤP |
-| `D01-F4.png` | Zoom tầng 4 | R4, SW-SRV, đúng 7 PC + 3 server | CẦN CHỤP |
-| `C02-backbone.png` | SW-CORE và R1-R4 | Bốn link backbone đều xanh | CẦN CHỤP |
+| `D01-topology.png` | Overview bốn tầng và SW-CORE | Kiến trúc tổng thể | Có/PASS |
+| `D01-F1.png` | ADMIN và STAFF tầng 1 | Chi tiết topology | Có/PASS |
+| `D01-F2.png` | TECH, MGMT và R2 tầng 2 sau sửa port | Chi tiết topology; Issue TECH/MGMT | Có/PASS |
+| `D01-F3.png` | MEETING WLAN tầng 3 | Chi tiết topology | Có/PASS |
+| `D01-F4.png` | 7 PC + 3 server tầng 4 | Chi tiết topology | Có/PASS |
+| `C02-backbone.png` | Bốn nhánh router về SW-CORE | Thiết kế backbone | Có/PASS |
+| `C10A-SRV-PC01-static.png` | SRV-PC01 `.40.5/28`, GW `.40.1`, DNS `.40.3` | SERVER subnet | Có/PASS |
+| `C10B-SRV-PC01-local-ping.png` | Ping gateway và ba server cùng subnet | SERVER subnet | Có/PASS |
 
-### B. Host tĩnh và dịch vụ
+## 2. Router, static route và DHCP relay
 
-| ID/file | Màn hình phải thấy | Điều kiện PASS | Trạng thái |
+| File | Nội dung | Dùng cho | Trạng thái |
 |---|---|---|---|
-| `C10A-SRV-PC01-static.png` | IP Configuration SRV-PC01 | `.40.5/28`, GW `.40.1`, DNS `.40.3` | CẦN CHỤP |
-| `C10B-SRV-PC01-local-ping.png` | Command Prompt SRV-PC01 | Ping `.40.1`, `.40.2`, `.40.3`, `.40.4` thành công | CẦN CHỤP |
-| `C05A-dhcp-server-ip.png` | Desktop/IP của DHCP-SRV | `.40.2/28`, GW `.40.1`, DNS `.40.3` | CẦN CHỤP |
-| `C05B-dhcp-pools.png` | Services/DHCP | DHCP On, thấy đủ năm pool nghiệp vụ | CẦN CHỤP |
-| `C05C-pool-staff.png` | Chi tiết POOL-STAFF | Start `.11.4`, GW `.11.1`, DNS `.40.3`, `/27`, max 20 | CẦN CHỤP |
-| `C05D-pool-meeting.png` | Chi tiết POOL-MEETING | Start `.30.4`, GW `.30.1`, DNS `.40.3`, `/27`, max 20 | CẦN CHỤP |
-| `C06A-dns-server-ip.png` | Desktop/IP của DNS-SRV | `.40.3/28`, GW `.40.1`, DNS `.40.3` | CẦN CHỤP |
-| `C06B-dns-records.png` | Services/DNS | Service On; A `mmt-90.com` và CNAME `www` đúng | CẦN CHỤP |
-| `C07A-web-server-ip.png` | Desktop/IP của WEB-SRV | `.40.4/28`, GW `.40.1`, DNS `.40.3` | CẦN CHỤP |
-| `C07B-web-http.png` | Services/HTTP | HTTP On, `index.html` có nội dung nhóm | CẦN CHỤP |
-| `C07C-web-content.png` | Browser qua domain | Trang nhóm mở bằng `www.mmt-90.com` | CẦN CHỤP |
-| `C08-ap-staff.png` | AP tầng 1 | `MMT-90-STAFF`, WPA2-PSK/AES; không lộ passphrase | CẦN CHỤP |
-| `C09-ap-meeting.png` | AP tầng 3 | `MMT-90-MEETING`, WPA2-PSK/AES; không lộ passphrase | CẦN CHỤP |
+| `C01-T10A-R1-interface-route.png` | R1 interface `up/up`, 4 static route | Static routing, T10 | Có/PASS |
+| `C01-T10B-R2-interface-route.png` | R2 interface `up/up`, 4 static route | Static routing, T10 | Có/PASS |
+| `C01-T10C-R3-interface-route.png` | R3 interface `up/up`, 5 static route | Static routing, T10 | Có/PASS |
+| `C01-T10D-R4-interface-route.png` | R4 interface `up/up`, 5 static route | Static routing, T10 | Có/PASS |
+| `C04A-R1-dhcp-helper.png` | Hai helper R1 về `.40.2` | DHCP relay | Có/PASS |
+| `C04B-R2-dhcp-helper.png` | Hai helper R2 về `.40.2` | DHCP relay | Có/PASS |
+| `C04C-R3-dhcp-helper.png` | Một helper R3 về `.40.2` | DHCP relay | Có/PASS |
+| `T11-r1-to-r4-backbone.png` | R1 ping R4 backbone `.255.4` 5/5 | T11 | Có/PASS |
+| `S01A-R1-to-dhcp.png` | R1 ping DHCP-SRV 5/5 | Routing tới dịch vụ | Có/PASS |
+| `S01B-R2-to-dhcp.png` | R2 ping DHCP-SRV 5/5 | Routing tới dịch vụ | Có/PASS |
+| `S01C-R3-to-dhcp.png` | R3 ping DHCP-SRV 5/5 | Routing tới dịch vụ | Có/PASS |
+| `S01D-R4-to-dhcp.png` | R4 ping DHCP-SRV 5/5 | Routing tới dịch vụ | Có/PASS |
 
-### C. Router, route, helper và backbone
+## 3. DHCP, DNS, WEB và Wi-Fi
 
-| ID/file | Màn hình phải thấy | Điều kiện PASS | Trạng thái |
+| File | Nội dung | Vị trí report | Trạng thái |
 |---|---|---|---|
-| `C01-T10A-R1-interface-route.png` | R1 `show ip interface brief` + `show ip route` | Interface dùng `up/up`, 4 static route | CẦN CHỤP |
-| `C01-T10B-R2-interface-route.png` | R2 hai lệnh trên | Interface dùng `up/up`, 4 static route | CẦN CHỤP |
-| `C01-T10C-R3-interface-route.png` | R3 hai lệnh trên | Interface dùng `up/up`, 5 static route | CẦN CHỤP |
-| `C01-T10D-R4-interface-route.png` | R4 hai lệnh trên | Interface dùng `up/up`, 5 static route | CẦN CHỤP |
-| `C04A-R1-dhcp-helper.png` | R1 helper output | Hai helper đều về `172.90.40.2` | CẦN CHỤP |
-| `C04B-R2-dhcp-helper.png` | R2 helper output | Hai helper đều về `172.90.40.2` | CẦN CHỤP |
-| `C04C-R3-dhcp-helper.png` | R3 helper output | Một helper về `172.90.40.2` | CẦN CHỤP |
-| `T11-r1-to-r4-backbone.png` | R1 ping `172.90.255.4` | Thành công 5/5 | CẦN CHỤP |
-| `S01A-R1-to-dhcp.png` | R1 ping `172.90.40.2` | Thành công 5/5 | CẦN CHỤP |
-| `S01B-R2-to-dhcp.png` | R2 ping `172.90.40.2` | Thành công 5/5 | CẦN CHỤP |
-| `S01C-R3-to-dhcp.png` | R3 ping `172.90.40.2` | Thành công 5/5 | CẦN CHỤP |
-| `S01D-R4-to-dhcp.png` | R4 ping `172.90.40.2` | Thành công 5/5 | CẦN CHỤP |
+| `C05A-dhcp-server-ip.png` | DHCP-SRV `.40.2/28` | DHCP Server | Có/PASS |
+| `C05B-dhcp-pools.png` | DHCP On và năm custom pool | DHCP Server | Có/PASS |
+| `C05C-pool-staff.png` | Chi tiết POOL-STAFF | DHCP pool | Có/PASS |
+| `C05D-pool-meeting.png` | Chi tiết POOL-MEETING | DHCP pool | Có/PASS |
+| `C06A-dns-server-ip.png` | DNS-SRV `.40.3/28` | DNS | Có/PASS |
+| `C06B-dns-records.png` | A record và CNAME | DNS | Có/PASS |
+| `C07A-web-server-ip.png` | WEB-SRV `.40.4/28` | WEB | Có/PASS |
+| `C07B-web-http_1.png` | Một phần cấu hình HTTP/index | WEB | Có/PASS |
+| `C07B-web-http_2.png` | Phần còn lại của HTTP/index | WEB | Có/PASS |
+| `C08-ap-staff.png` | SSID STAFF, WPA2-PSK/AES | Wi-Fi | Có/PASS |
+| `C09-ap-meeting.png` | SSID MEETING, WPA2-PSK/AES | Wi-Fi | Có/PASS |
 
-Nếu interface và route không vừa một ảnh, dùng hậu tố `-1`, `-2`; vẫn giữ ID
-gốc trong caption. Không crop mất hostname router hoặc câu lệnh.
+Không có file C07C riêng. Dẫn chiếu `T09C-web-tech.png` để chứng minh nội dung
+website được truy cập bằng domain.
 
-### D. DHCP client và kiểm thử T01-T12
+## 4. Test matrix T01-T12
 
-| ID/file | Kết quả phải thấy | Trạng thái |
+| File | Nội dung | Test | Trạng thái |
+|---|---|---|---|
+| `T01-admin-to-gateway.png` | ADMIN ping `.10.1` | T01 | Có/PASS |
+| `T02-admin-to-tech.png` | ADMIN ping TECH `.20.x` | T02 | Có/PASS |
+| `T03-mgmt-to-web.png` | MGMT `.21.x` ping WEB `.40.4` | T03 | Có/PASS |
+| `T04-meeting-to-admin.png` | MEETING ping ADMIN | T04 | Có/PASS |
+| `T05-staff-to-admin.png` | STAFF gửi ICMP/PDU tới ADMIN | T05 | Có/PASS |
+| `T06A-admin-dhcp.png` | ADMIN nhận `.10.x/28` | T06 | Có/PASS |
+| `T06B-staff-dhcp.png` | STAFF nhận `.11.x/27` | T06 | Có/PASS |
+| `T06C-tech-dhcp.png` | TECH nhận `.20.x/28` | T06; retest port R2 | Có/PASS |
+| `T06D-mgmt-dhcp.png` | MGMT nhận `.21.x/28` | T06; retest port R2 | Có/PASS |
+| `T06E-meeting-dhcp.png` | MEETING nhận `.30.x/27` | T06 và T12 | Có/PASS |
+| `T07-dns-a.png` | `mmt-90.com -> .40.4` | T07 | Có/PASS |
+| `T08-dns-cname.png` | `www.mmt-90.com -> .40.4` | T08 | Có/PASS |
+| `T09A-web-admin.png` | Website từ ADMIN | T09 | Có/PASS |
+| `T09B-web-staff.png` | Website từ STAFF | T09 | Có/PASS |
+| `T09C-web-tech.png` | Website từ TECH | T09; nội dung WEB | Có/PASS |
+| `T09D-web-mgmt.png` | Website từ MGMT | T09 | Có/PASS |
+| `T09E-web-meeting.png` | Website từ MEETING | T09 | Có/PASS |
+
+T10 dùng bốn ảnh C01; T11 dùng `T11-r1-to-r4-backbone.png`; T12 dùng lại
+`T06E-meeting-dhcp.png`.
+
+## 5. Simulation và smoke test
+
+| File | Nội dung | Trạng thái |
 |---|---|---|
-| `T06A-admin-dhcp.png` | ADMIN: `172.90.10.4-.13/28`, GW `.10.1`, DNS `.40.3` | CẦN CHỤP |
-| `T06B-staff-dhcp.png` | STAFF: `172.90.11.4-.23/27`, GW `.11.1`, DNS `.40.3` | CẦN CHỤP |
-| `T06C-tech-dhcp.png` | TECH: `172.90.20.5-.9/28`, GW `.20.1`, DNS `.40.3` | CẦN CHỤP |
-| `T06D-mgmt-dhcp.png` | MGMT: `172.90.21.5-.9/28`, GW `.21.1`, DNS `.40.3` | CẦN CHỤP |
-| `T06E-meeting-dhcp.png` | MEETING: `172.90.30.4-.23/27`, GW `.30.1`, DNS `.40.3`; dùng lại cho T12 | CẦN CHỤP |
-| `T01-admin-to-gateway.png` | ADMIN ping `172.90.10.1` thành công | CẦN CHỤP |
-| `T02-admin-to-tech.png` | ADMIN ping IP DHCP thật của TECH thành công | CẦN CHỤP |
-| `T03-mgmt-to-web.png` | MGMT ping `172.90.40.4` thành công | CẦN CHỤP |
-| `T04-meeting-to-admin.png` | MEETING wireless ping ADMIN thành công | CẦN CHỤP |
-| `T05-staff-to-admin.png` | STAFF wireless ping ADMIN thành công | CẦN CHỤP |
-| `T07-dns-a.png` | `nslookup mmt-90.com` trả `172.90.40.4` | CẦN CHỤP |
-| `T08-dns-cname.png` | `nslookup www.mmt-90.com` trả `172.90.40.4` | CẦN CHỤP |
-| `T09A-web-admin.png` | Website bằng domain từ ADMIN | CẦN CHỤP |
-| `T09B-web-staff.png` | Website bằng domain từ STAFF | CẦN CHỤP |
-| `T09C-web-tech.png` | Website bằng domain từ TECH | CẦN CHỤP |
-| `T09D-web-mgmt.png` | Website bằng domain từ MGMT | CẦN CHỤP |
-| `T09E-web-meeting.png` | Website bằng domain từ MEETING | CẦN CHỤP |
+| `SIM-DHCP.png` | DHCP Discover, Offer, Request, ACK qua relay | Có/PASS |
+| `SIM-DNS-HTTP.png` | DNS tới `.40.3`, sau đó TCP/HTTP tới `.40.4` | Có/PASS |
+| `S02-final-smoke.png` | Dịch vụ vẫn hoạt động sau khi mở lại topology | Có/PASS |
 
-Với smartphone không có Command Prompt, T06B dùng màn hình
-`Config > Wireless0`/IP Configuration có đủ IP, mask, gateway và DNS. Với T05,
-dùng Add Simple PDU và chụp Event List báo Successful; không thêm laptop mới
-chỉ để có output ping.
+## 6. Quy tắc đưa vào report
 
-### E. Simulation Mode
-
-| ID/file | Event bắt buộc | Trạng thái |
-|---|---|---|
-| `SIM-DHCP.png` | Discover, Offer, Request, ACK qua R1 tới `172.90.40.2` | CẦN CHỤP |
-| `SIM-DNS-HTTP.png` | DNS query/response tới `.40.3`, sau đó TCP/HTTP tới `.40.4` | CẦN CHỤP |
-| `S02-final-smoke.png` | Một test PASS sau khi đóng/mở lại file; ưu tiên website/domain | KHUYẾN NGHỊ |
-
-## 2. Quy tắc chụp để dùng thẳng trên Prism
-
-- Để tiêu đề cửa sổ hoặc tên thiết bị nguồn xuất hiện trong ảnh.
-- Không crop mất lệnh, URL, IP đích, gateway, DNS hoặc dòng success.
-- Chụp ở độ phân giải đủ đọc; không chụp cả desktop nếu nội dung quá nhỏ.
-- Không để lộ WPA2 passphrase, tài khoản cá nhân hoặc thông báo riêng tư.
-- Khi ping lần đầu timeout vì ARP, chạy lại rồi chỉ chụp lần thành công.
-- D01 là overview; D01-F1 đến D01-F4 vẫn bắt buộc để tên thiết bị đủ rõ.
-- C07C có thể dùng lại làm một ảnh T09 nếu source/subnet nhìn rõ, nhưng vẫn nên
-  chụp đủ T09A-E để chứng minh truy cập từ năm mạng.
-- Sau khi lưu, mở lại ảnh ngay để kiểm tra không mờ và không bị cắt output.
-
-## 3. Caption mẫu
-
-- **C01A-D/T10A-D:** Các interface router đang sử dụng đều `up/up`; R1/R2 có
-  bốn static route và R3/R4 có năm static route tới các subnet từ xa.
-- **C04A-C:** R1, R2 và R3 có tổng cộng năm
-  `ip helper-address 172.90.40.2`, chuyển DHCP broadcast tới server tập trung.
-- **C05A-D:** DHCP-SRV có địa chỉ tĩnh đúng và năm pool cấp đúng gateway, DNS,
-  mask và dải địa chỉ cho từng mạng động.
-- **S01A-D:** Bốn router đều ping DHCP-SRV thành công 5/5, chứng minh đường đi
-  và đường về giữa backbone và server subnet hoạt động.
-- **T06A-E:** Client đại diện của năm mạng nhận DHCP đúng subnet, gateway và DNS.
-- **T09A-E:** Client ở năm subnet truy cập website nội bộ thành công bằng domain.
+- Mỗi ảnh duy nhất chèn một lần; nơi khác dùng cross-reference.
+- Nhóm D01-F1..F4, C01A-D, S01A-D, T06A-E và T09A-E thành subfigure/lưới.
+- Ảnh CLI phải đủ lớn để đọc; không kéo méo tỷ lệ.
+- Crop passphrase ở C08/C09 nếu đang hiển thị nhưng giữ SSID và security mode.
+- Caption nêu thao tác, kết quả và ý nghĩa; không chỉ lặp lại tên file.
+- Không đưa `.gitkeep`, ảnh debug hoặc bản sao vào Prism.

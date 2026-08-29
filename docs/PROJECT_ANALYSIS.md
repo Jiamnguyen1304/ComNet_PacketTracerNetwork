@@ -85,7 +85,8 @@ có ba service server, tầng 4 còn tối đa bảy PC/host bổ sung.
 Bố cục vật lý khác hình minh họa cũ nhưng vẫn đúng kiến trúc logic miễn là mỗi
 nhánh dùng interface/subnet trong `ADDRESSING_PLAN.md`.
 
-## Điểm cần xác nhận
+## Thông tin hành chính ngoài phạm vi kỹ thuật
 
 Đề dùng mẫu tên file có ba MSSV nhưng repository này phục vụ nhóm hai người.
-Nhóm cần hỏi giảng viên tên zip chính xác và ghi lại câu trả lời trước khi nộp.
+Tên file nén và deadline phải lấy trực tiếp từ LMS/thông báo giảng viên; không
+suy đoán hoặc đưa placeholder vào phần nội dung kỹ thuật của report.

@@ -1,8 +1,8 @@
 # Khung báo cáo kỹ thuật
 
-Nội dung kỹ thuật đã điền theo topology cuối nằm trong
-`REPORT_DRAFT_CONTENT.md`. Dùng `SCREENSHOT_INDEX.md` để chèn đúng ảnh và không
-đánh dấu kết quả chưa chạy là PASS.
+Nội dung kỹ thuật as-built nằm trong `REPORT_DRAFT_CONTENT.md`; bảng nghiệm thu
+cuối nằm trong `../docs/TEST_MATRIX.md`; manifest ảnh nằm trong
+`SCREENSHOT_INDEX.md`. T01-T12 và hai luồng Simulation đã có ảnh thật.
 
 ## 1. Trang bìa
 
@@ -43,15 +43,19 @@ Chèn ảnh có caption cho các bước:
 - Thay nội dung website.
 - Cấu hình SSID và WPA2 trên hai AP.
 
+Ưu tiên nhóm ảnh thành subfigure để báo cáo không quá dài. Không chèn ảnh trùng;
+`T06E-meeting-dhcp.png` dùng cho cả T06 và T12, nhóm C01 dùng cho T10, và
+`T09C-web-tech.png` dùng làm minh chứng nội dung website thay cho C07C riêng.
+
 ## 6. Kiểm thử
 
-Chèn bảng đã hoàn thành từ `docs/TEST_MATRIX.md`, actual result và ảnh tương
+Chèn bảng đã hoàn thành từ `../docs/TEST_MATRIX.md`, actual result và ảnh tương
 ứng. Giải thích kết quả `show ip route`, ký hiệu `C`, `L`, `S`, câu hỏi default
 route trên R1, luồng DHCP relay và luồng DNS rồi HTTP.
 
 ## 7. Issues and Resolutions
 
-Trình bày tối thiểu ba vấn đề có thật từ `docs/ISSUES.md`, gồm triệu chứng,
+Trình bày tối thiểu ba vấn đề có thật từ `../docs/ISSUES.md`, gồm triệu chứng,
 nguyên nhân gốc, cách sửa và kết quả retest.
 
 ## 8. Kết luận và hướng phát triển

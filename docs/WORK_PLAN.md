@@ -1,60 +1,48 @@
-# Phân công nhóm 2 thành viên
+# Phân công và mức đóng góp thực tế
 
-## Bàn giao cuối ngày 29/08/2026
+## Nguyễn Vũ Đức Duy (25127190) — Network lead
 
-- Nguyễn Minh Khôi thực hiện toàn bộ phần Packet Tracer còn lại: audit topology,
-  kiểm tra services, chạy T01-T12, Simulation Mode, chụp ảnh và smoke test sau
-  khi save.
-- Nguyễn Vũ Đức Duy tập trung viết report trên Prism và nhận bộ ảnh từ Khôi.
-- Việc Khôi nhận phần thực hành của Duy không thay đổi lịch sử đóng góp: Duy đã
-  phân tích yêu cầu, lập address plan, dựng topology, cấu hình router/switch và
-  static routing.
-- Khi quay demo, cả hai vẫn phải có audio vì đề yêu cầu mỗi thành viên thuyết
-  minh ít nhất một phần.
+- Phân tích yêu cầu và lập kế hoạch địa chỉ/subnet ban đầu.
+- Dựng topology, bố trí thiết bị và kết nối cable.
+- Cấu hình hostname, interface router, switch và static routing.
+- Export running-config của bốn router và năm switch.
+- Đồng bộ bản topology nền qua nhánh `DuyVu`.
+- Soạn và hoàn thiện report trên Prism.
+- Phụ trách phần kiến trúc/routing trong video demo.
 
-## Vai trò đề xuất
+## Nguyễn Minh Khôi (25127389) — Services and evidence lead
 
-### Nguyễn Vũ Đức Duy (25127190) - Network lead
+- Đối chiếu topology với đề bài và address plan as-built.
+- Cấu hình/kiểm tra DHCP-SRV, năm pool và DHCP relay.
+- Cấu hình/kiểm tra DNS-SRV, WEB-SRV và hai Access Point.
+- Phát hiện và sửa ánh xạ cổng R2 giữa TECH/MGMT; reset DHCP lease và retest.
+- Chạy T01-T12, Simulation Mode và smoke test sau khi mở lại topology.
+- Chụp, đặt tên và bàn giao toàn bộ ảnh minh chứng cho report.
+- Phụ trách phần services/acceptance trong video demo.
 
-- Chịu trách nhiệm address plan và sơ đồ logic.
-- Dựng thiết bị, cable, hostname và interface router.
-- Cấu hình static routing.
-- Export config router và switch.
-- Trình bày phần kiến trúc/routing trong video.
+## Review chéo và phối hợp
 
-### Nguyễn Minh Khôi (25127389) - Services and evidence lead
+- Khôi review address plan, interface, static route và topology do Duy triển khai.
+- Duy review DHCP pool, DNS record, website, Wi-Fi và nội dung report từ bộ ảnh.
+- Hai thành viên cùng chịu trách nhiệm tính nhất quán giữa `.pkt`, config text,
+  report và artifact nộp cuối.
+- File `.pkt` chỉ do một người sửa tại một thời điểm; file text được review và
+  đồng bộ qua Git.
 
-- Cấu hình DHCP server và relay checklist.
-- Cấu hình DNS, WEB và hai Access Point.
-- Quản lý test matrix, ảnh và caption.
-- Tổng hợp report, video và submission.
-- Trình bày phần service/acceptance trong video.
+## Trạng thái mốc công việc
 
-## Review chéo
-
-- B review address plan và static route của A.
-- A review DHCP pool, DNS record, website và Wi-Fi của B.
-- Cả hai cùng chạy test matrix từ đầu sau mỗi thay đổi lớn.
-- Người không giữ `.pkt` ưu tiên viết tài liệu, review config text và chuẩn bị ảnh.
-
-## Mốc làm việc
-
-| Mốc | Kết quả | Owner | Reviewer |
+| Mốc | Kết quả | Owner chính | Trạng thái |
 |---|---|---|---|
-| M0 | Chốt biến dự án và XX | Duy | Khôi |
-| M1 | Address plan + sơ đồ | Duy | Khôi |
-| M2 | Topology + basic config | Duy | Khôi |
-| M3 | Static routing pass | Duy | Khôi |
-| M4 | DHCP relay + 5 pool pass | Khôi | Duy |
-| M5 | DNS/WEB/Wi-Fi pass | Khôi | Duy |
-| M6 | 12 test rows pass | Khôi | Duy |
-| M7 | Report + configs complete | Cả hai | Cả hai |
-| M8 | Demo + submission audit | Cả hai | Cả hai |
+| M0 | Chốt XX, domain và thông tin nhóm | Duy | Hoàn thành |
+| M1 | Address plan và sơ đồ logic | Duy | Hoàn thành |
+| M2 | Topology và basic config | Duy | Hoàn thành |
+| M3 | Static routing | Duy | Hoàn thành |
+| M4 | DHCP relay và năm pool | Khôi | Hoàn thành |
+| M5 | DNS, WEB và Wi-Fi | Khôi | Hoàn thành |
+| M6 | T01-T12 và Simulation Mode | Khôi | Hoàn thành |
+| M7 | Bộ ảnh và context cho report | Khôi | Hoàn thành |
+| M8 | Report trên Prism | Duy, Khôi review | Đang hoàn thiện |
+| M9 | Video và audit gói nộp | Cả hai | Chưa thực hiện |
 
-## Quy tắc bàn giao topology
-
-- Không gửi file qua nhiều kênh không kiểm soát phiên bản.
-- Trước bàn giao, ghi commit hash hoặc thời điểm file được save.
-- Người nhận mở file, kiểm tra version và chạy ba smoke test.
-- Smoke test gồm ping gateway, ping WEB-SRV và nslookup domain.
-- Chỉ sau khi smoke test pass mới tiếp tục chỉnh topology.
+Phân công trên phản ánh công việc thực tế, không xóa lịch sử đóng góp của thành
+viên đã dựng topology/config trước khi người còn lại tiếp quản nghiệm thu.

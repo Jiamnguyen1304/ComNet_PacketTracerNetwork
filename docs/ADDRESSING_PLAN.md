@@ -1,7 +1,7 @@
 # Kế hoạch địa chỉ thực tế
 
-Nguồn chuẩn của bảng này là running-config đã export, ảnh topology/DHCP ngày
-2026-08-29 và các quyết định cấu hình an toàn đã chốt trong `NEXT_STEPS.md`.
+Nguồn chuẩn của bảng này là `topology.pkt` cuối, running-config đã export và bộ
+ảnh nghiệm thu trong `report/images/` ngày 29-30/08/2026.
 
 ## Quy ước
 

@@ -143,8 +143,8 @@ subnet và DNS `172.90.40.3`. Năm LAN interface trên R1-R3 đều relay tới
 | Router config | `packet-tracer/configs/` | Text review được qua Git |
 | Switch config | `packet-tracer/configs/` | Text review được qua Git |
 | Website | `packet-tracer/web/index.html` | Hai thành viên kiểm tra chéo |
-| Báo cáo | `report/REPORT_TEMPLATE.md` | Hai người chia phần rồi ghép chung |
-| Ảnh | `report/images/` | Theo mã trong screenshot index |
+| Báo cáo | `report/REPORT_DRAFT_CONTENT.md`, `report/PRISM_CONTEXT.md` | Chỉnh trên Prism, giữ cấu trúc hiện có |
+| Ảnh | `report/images/` | Theo manifest cuối `report/SCREENSHOT_INDEX.md` |
 | Demo | `demo/` | Ghi hình sau khi test matrix pass |
 
 ## 10. Quyết định kiến trúc

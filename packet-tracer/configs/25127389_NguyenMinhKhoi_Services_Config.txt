@@ -1,11 +1,11 @@
-PACKET TRACER PROJECT 3 - FINAL TARGET SERVICES CONFIG
+PACKET TRACER PROJECT 3 - AS-BUILT SERVICES CONFIG
 
 Owner: Nguyen Minh Khoi - 25127389
 XX: 90
-Nguon: topology.pkt, anh kiem tra va quyet dinh final trong docs/NEXT_STEPS.md
+Nguon: topology.pkt, docs/ADDRESSING_PLAN.md va anh nghiem thu cuoi
 
-Luu y: gia tri STAFF/MEETING start .4 va passphrase ben duoi la cau hinh dich
-cuoi. Phai ap dung trong GUI va test DHCP/Wi-Fi truoc khi danh dau hoan thanh.
+Trang thai: da ap dung trong GUI, da retest DHCP/Wi-Fi va co anh minh chung trong
+report/images. Passphrase chi dung cho lab, khong dua nguyen van vao report.
 
 
 ======================================================================

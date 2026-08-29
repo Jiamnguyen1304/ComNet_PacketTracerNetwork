@@ -1,83 +1,75 @@
-# Issues and Resolutions đã gặp thật
+# Issues and Resolutions thực tế
 
-## Issue 4 - Tài liệu endpoint và đường dẫn không khớp topology vật lý hiện tại
+## Issue 1 — Ánh xạ cổng R2 của TECH/MGMT bị đảo và DHCP pool hết lease
 
-- Triệu chứng: một số file dùng tên client minh họa như `PC-HC-01`, chỉ mô tả
-  ba server ở tầng 4 và trỏ nhầm tới `packet-tracer/topology.pkt`; ảnh overview
-  bố cục dọc cũng quá nhỏ để đọc label.
-- Nguyên nhân: tài liệu nền được viết trước khi topology cuối được bố trí lại và
-  thêm các cụm endpoint đầy đủ trên canvas.
-- Cách sửa: dùng `topology.pkt` ở thư mục gốc làm nguồn chuẩn; mô tả client theo
-  vai trò và tên/IP thật khi test; bổ sung cụm host static tầng 4; tách ảnh
-  overview và bốn ảnh zoom theo tầng.
-- Phòng ngừa: không đưa display name hoặc port chưa xác nhận từ GUI vào report;
-  sau mỗi lần đổi bố cục phải review `LOGICAL_TOPOLOGY.md`, `DEVICE_LIST.md` và
-  `SCREENSHOT_INDEX.md`.
+- **Triệu chứng:** client trong phòng TECH nhận `172.90.21.x` thay vì
+  `172.90.20.x`. Sau khi đổi hai uplink, yêu cầu DHCP mới ban đầu báo failed.
+- **Nguyên nhân gốc:** SW-KT từng nối `R2/G0/1` (gateway `.21.1`) và SW-LD từng
+  nối `R2/G0/0` (gateway `.20.1`). Năm client của mỗi nhánh đã giữ toàn bộ năm
+  lease trong pool đối diện; sau khi đổi dây, hai pool tạm thời không còn địa
+  chỉ trống cho đúng nhóm client.
+- **Cách sửa:** nối `R2/G0/0 -> SW-KT` và `R2/G0/1 -> SW-LD`; giữ nguyên
+  `POOL-TECH`/`POOL-MGMT` theo address plan; reset lease rồi yêu cầu DHCP lại
+  cho toàn bộ client tầng 2.
+- **Retest:** TECH nhận `.20.5-.20.9/28`, gateway `.20.1`; MGMT nhận
+  `.21.5-.21.9/28`, gateway `.21.1`. T02, T03, DNS, HTTP và Simulation đều PASS.
+- **Evidence:** `D01-F2.png`, `C01-T10B-R2-interface-route.png`,
+  `T06C-tech-dhcp.png`, `T06D-mgmt-dhcp.png`, `T02-admin-to-tech.png`,
+  `T03-mgmt-to-web.png`.
 
-## Issue 5 - Tầng 4 vượt giới hạn host và canvas khó dùng khi nghiệm thu
+## Issue 2 — Tài liệu dịch vụ từng lệch address plan as-built
 
-- Thời điểm: 2026-08-29 18:11, khi review ba ảnh zoom topology.
-- Triệu chứng: tầng 4 có PC11-PC20 cùng DHCP/DNS/WEB server, tổng 13 host trong
-  khi đề giới hạn tối đa 10 host; nhãn tầng 1 ghi “Phòng quản trị”; canvas chưa
-  có network/prefix/gateway label và client có nhiều tên trùng dạng `(1)`.
-- Quyết định: tính Server-PT là host; xóa PC18-PC20, giữ bảy PC và ba server;
-  đổi tên endpoint theo khu vực, đổi nhãn tầng 1 thành “Phòng hành chính” và bổ
-  sung label cho sáu LAN cùng backbone.
-- Retest bắt buộc: kiểm đếm lại, kiểm tra IP static `.40.5-.40.11`, chờ link
-  xanh, chụp lại D01-F1..F4 rồi mới chạy test matrix.
+- **Triệu chứng:** tài liệu cũ dùng SERVER `172.90.60.0/28` và backbone
+  `.249-.252`, trong khi topology cuối dùng SERVER `172.90.40.0/28` và backbone
+  `.1-.4`.
+- **Nguyên nhân gốc:** hai nhánh phát triển dựa trên hai phiên bản address plan.
+- **Cách sửa:** chọn `topology.pkt`, running-config và ảnh nghiệm thu làm nguồn
+  chuẩn; đồng bộ address plan, services, test matrix và report draft.
+- **Retest:** xác nhận 10 interface IP, 18 static route, 5 DHCP helper và không
+  còn địa chỉ cũ trong artifact nộp chính.
+- **Bài học:** khóa address plan trước triển khai và cập nhật tài liệu từ
+  running-config as-built thay vì bản thiết kế cũ.
 
-## Issue 1 - Tài liệu dịch vụ lệch address plan của topology cuối
+## Issue 3 — `serverPool` mặc định không thể xóa
 
-- Thời điểm: 2026-08-29, sau khi pull bản hoàn chỉnh từ DuyVu.
-- Người phát hiện: Khôi trong quá trình kiểm tra route/DHCP.
-- Triệu chứng: file service/checklist cũ dùng SERVER `172.90.60.0/28` và
-  backbone `.249-.252`, trong khi CLI thực tế hiển thị SERVER
-  `172.90.40.0/28` và backbone `.1-.4`.
-- Phạm vi ảnh hưởng: DHCP helper, server IP, DNS A record, test matrix và số
-  liệu đưa vào report có nguy cơ sai dù topology hoạt động.
-- Chẩn đoán: đối chiếu `show ip interface brief`, `show ip route`,
-  `show running-config` của R1-R4 và ảnh DHCP-SRV.
-- Nguyên nhân gốc: hai nhánh phát triển dựa trên hai phiên bản address plan; tài
-  liệu Khôi chưa được cập nhật sau khi Duy tối ưu subnet theo tầng.
-- Cách sửa: chọn running-config/topology cuối làm nguồn chuẩn; đồng bộ toàn bộ
-  address plan, service checklist, test matrix và report draft.
-- Retest: kiểm tra tự động xác nhận 10 router interface IP, 18 static route, năm
-  helper `172.90.40.2`; tìm kiếm lại không còn địa chỉ `.60.x` trong artifact
-  nộp chính.
-- Bài học: khóa address plan trước khi cấu hình và luôn cập nhật tài liệu từ
-  as-built running-config thay vì từ bản thiết kế cũ.
+- **Triệu chứng:** nút `Remove` bị khóa đối với `serverPool`; pool hiển thị
+  gateway/DNS `0.0.0.0` và maximum users 512.
+- **Nguyên nhân:** đây là pool mặc định của Server-PT trong Packet Tracer.
+- **Cách xử lý:** giữ nguyên nhưng không dùng. SERVER subnet chỉ có IP tĩnh; năm
+  mạng client từ xa được ánh xạ vào năm custom pool bằng DHCP relay.
+- **Retest:** DHCP Service On, đủ năm pool nghiệp vụ và T06A-E đều PASS.
 
-## Issue 2 - Merge conflict khi hợp nhất bản DuyVu hoàn chỉnh
+## Issue 4 — Tầng 4 vượt giới hạn tối đa 10 host
 
-- Thời điểm: 2026-08-29.
-- Người phát hiện: Khôi khi pull nhánh DuyVu.
-- Triệu chứng: Git báo conflict ở 9 file router/switch config và
-  `packet-tracer/web/index.html`; topology mới được stage riêng.
-- Phạm vi ảnh hưởng: không thể hoàn tất merge/push lên Khoi nếu chưa chọn nguồn
-  đúng cho artifact cấu hình.
-- Nguyên nhân gốc: Khôi đã chuẩn bị deployment script trong khi Duy export
-  running-config thật vào cùng các path.
-- Cách sửa: giữ phiên bản DuyVu cho topology, chín running-config và website;
-  giữ tài liệu/checklist riêng của Khôi; tạo merge commit `62181f9`.
-- Retest: so sánh các artifact do Duy sở hữu giữa `origin/DuyVu` và
-  `origin/Khoi` không còn khác biệt; push Khoi thành công.
-- Bài học: tách deployment script khỏi thư mục running-config hoặc thống nhất
-  owner file trước khi hai người cùng chỉnh.
+- **Triệu chứng:** phiên bản ban đầu có 10 PC cùng 3 Server-PT, tổng 13 host.
+- **Nguyên nhân:** ba server chưa được tính vào giới hạn host của đề.
+- **Cách sửa:** xóa PC18-PC20, giữ `SRV-PC01..07` cùng DHCP/DNS/WEB server;
+  gán PC tĩnh `.40.5-.40.11`.
+- **Retest:** D01-F4 thể hiện đúng 7 PC + 3 server; C10A-B xác nhận cấu hình và
+  kết nối nội bộ SERVER subnet.
 
-## Issue 3 - Không thể xóa pool mặc định serverPool
+## Issue 5 — Tài liệu endpoint và bố cục không khớp topology cuối
 
-- Thời điểm: 2026-08-29 khi kiểm tra DHCP-SRV.
-- Người phát hiện: Khôi.
-- Triệu chứng: nút `Remove` bị khóa đối với `serverPool`; pool hiển thị gateway
-  và DNS `0.0.0.0`, start address `172.90.40.0` và maximum users 512.
-- Phạm vi ảnh hưởng: có thể gây nhầm rằng DHCP Server đang có pool thừa hoặc
-  không hợp lệ.
-- Nguyên nhân gốc: `serverPool` là pool mặc định do Server-PT tạo và không cho
-  xóa trong phiên bản Packet Tracer đang dùng.
-- Cách xử lý: giữ nguyên pool mặc định; không có dynamic client trong SERVER
-  subnet; năm client subnet từ xa được ánh xạ vào năm custom pool thông qua
-  DHCP relay.
-- Retest: DHCP Service vẫn On, đủ năm custom pool và client nhận địa chỉ
-  `172.90.x.x` thành công.
-- Bài học: phân biệt artifact mặc định của simulator với pool nghiệp vụ; dùng
-  kết quả lease thực tế để xác nhận thay vì cố xóa thành phần hệ thống.
+- **Triệu chứng:** tài liệu dùng tên minh họa `PC-HC-01`, đường dẫn `.pkt` cũ,
+  và ảnh overview quá nhỏ để đọc nhãn.
+- **Nguyên nhân:** tài liệu được viết trước khi topology được bố trí dọc và đổi
+  display name endpoint.
+- **Cách sửa:** dùng `topology.pkt` ở thư mục gốc; chuẩn hóa tên theo vai trò;
+  dùng một overview và bốn ảnh zoom D01-F1..F4.
+- **Retest:** caption và test matrix dùng đúng client/subnet trên ảnh cuối.
+
+## Issue 6 — Merge conflict khi hợp nhất topology hoàn chỉnh
+
+- **Triệu chứng:** Git conflict ở chín running-config và website khi hợp nhất
+  nhánh DuyVu với tài liệu/services của Khôi.
+- **Nguyên nhân:** hai thành viên cùng sửa các đường dẫn artifact text.
+- **Cách sửa:** giữ topology/running-config/website từ DuyVu, giữ tài liệu và
+  service checklist đã review của Khôi; tạo merge commit `62181f9`.
+- **Retest:** các nhánh bàn giao không còn khác biệt ở artifact do Duy sở hữu.
+- **Bài học:** thống nhất owner từng file và chỉ một người sửa `.pkt` tại một
+  thời điểm.
+
+## Ba issue nên ưu tiên trong report
+
+Nếu cần giới hạn độ dài, ưu tiên Issue 1, Issue 2 và Issue 3 vì chúng thể hiện rõ
+quy trình chẩn đoán mạng, sửa cấu hình/topology và retest bằng bằng chứng.

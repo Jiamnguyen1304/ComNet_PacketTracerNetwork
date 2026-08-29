@@ -34,16 +34,16 @@
 | Tầng 4 | DNS-SRV | Server-PT | A + CNAME | 172.90.40.3/28 |
 | Tầng 4 | WEB-SRV | Server-PT | HTTP | 172.90.40.4/28 |
 
-## End devices theo kiến trúc hiện tại
+## End devices theo kiến trúc cuối
 
-| Subnet | Cụm thiết bị thể hiện trên canvas | Mục cần xác nhận |
+| Subnet | Thiết bị cuối | Trạng thái cuối |
 |---|---|---|
-| ADMIN | 10 PC qua SW-HC | Đổi thành `ADMIN-PC01..10`; tất cả DHCP |
-| STAFF | 3 smartphone qua AP-STAFF | Đổi thành `STAFF-PHONE01..03`; đúng SSID và DHCP |
-| TECH | 5 PC qua SW-KT | Đổi thành `TECH-PC01..05`; tất cả DHCP |
-| MGMT | 5 PC qua SW-LD | Đổi thành `MGMT-PC01..05`; tất cả DHCP |
-| MEETING | 1 smartphone + 1 laptop qua AP-MEETING | `MEETING-PHONE01`, `MEETING-LAPTOP01`; DHCP |
-| SERVER | 7 PC cùng 3 Server-PT qua SW-SRV | `SRV-PC01..07`; tổng 10 host, tất cả static |
+| ADMIN | `ADMIN-PC01..10` qua SW-HC | DHCP, mạng `172.90.10.0/28` |
+| STAFF | `STAFF-PHONE01..03` qua AP-STAFF | Đúng SSID, DHCP, mạng `172.90.11.0/27` |
+| TECH | `TECH-PC01..05` qua SW-KT | DHCP, mạng `172.90.20.0/28` |
+| MGMT | `MGMT-PC01..05` qua SW-LD | DHCP, mạng `172.90.21.0/28` |
+| MEETING | `MEETING-PHONE01`, `MEETING-LAPTOP01` qua AP-MEETING | DHCP, mạng `172.90.30.0/27` |
+| SERVER | `SRV-PC01..07` cùng 3 Server-PT qua SW-SRV | Tổng 10 host, tất cả static trong `172.90.40.0/28` |
 
-Ảnh 18:11 cho thấy tầng 4 ban đầu có 10 PC + 3 server. Quyết định cuối là xóa
-PC18-PC20 để còn bảy PC + ba server; sau khi sửa phải chụp lại ảnh D01-F4.
+Ánh xạ tầng 2 đã được hiệu chỉnh và retest: `R2/G0/0 -> SW-KT/TECH`,
+`R2/G0/1 -> SW-LD/MGMT`.

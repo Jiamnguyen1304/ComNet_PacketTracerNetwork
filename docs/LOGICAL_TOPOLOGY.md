@@ -7,9 +7,9 @@
 | R1 | G0/0 | SW-HC | G0/1 | ADMIN |
 | R1 | G0/1 | AP-STAFF | Port0 | STAFF |
 | R1 | G0/2 | SW-CORE | Fa0/1 | BACKBONE |
-| R2 | G0/0 | SW-KT | G0/1 | TECH |
-| R2 | G0/1 | SW-LD | G0/1 | MGMT |
-| R2 | G0/2 | SW-CORE | Fa0/2 | BACKBONE |
+| R2 | G0/0 | SW-KT | Fa0/6 | TECH |
+| R2 | G0/1 | SW-LD | Fa0/6 | MGMT |
+| R2 | G0/2 | SW-CORE | Fa0/4 | BACKBONE |
 | R3 | G0/0 | AP-MEETING | Port0 | MEETING |
 | R3 | G0/1 | SW-CORE | Fa0/3 | BACKBONE |
 | R4 | G0/0 | SW-SRV | G0/1 | SERVER |
@@ -18,9 +18,10 @@
 | SW-SRV | Fa0/3 | WEB-SRV | Fa0 | SERVER |
 | R4 | G0/1 | SW-CORE | Fa0/4 | BACKBONE |
 
-Các số port switch trong bảng là allocation logic đã dùng khi xây dựng. Trước
-khi đưa vào report, mở từng cable trong Packet Tracer để xác nhận port hiển thị
-thực tế, vì running-config switch không chứa description cho từng end-device.
+Ba port phía switch của R2 được xác nhận sau lần đổi dây cuối bằng CDP. Các port
+switch còn lại là allocation logic của topology; khi report không cần chứng minh
+port access cụ thể thì chỉ dẫn chiếu interface router và segment để tránh tuyên
+bố quá mức từ running-config không có description.
 
 ## Cụm endpoint đang thể hiện trên canvas
 
@@ -33,9 +34,9 @@ thực tế, vì running-config switch không chứa description cho từng end-
 | 3 | `R3/G0/0 -> AP-MEETING` | Laptop/smartphone phòng họp | DHCP, subnet MEETING |
 | 4 | `R4/G0/0 -> SW-SRV` | Cụm PC/host có dây và ba Server-PT | Static, subnet SERVER |
 
-Không dùng các tên `PC-HC-01`, `PC-KT-01` hoặc `PC-LD-01` như thể đó là tên
-thật nếu canvas vẫn đang dùng tên mặc định. Khi kiểm thử, ghi đúng display name
-và IP thực tế của client được chọn.
+Khi kiểm thử và viết caption, dùng display name cuối trong `DEVICE_LIST.md` cùng
+IP thực tế hiển thị trên ảnh; không dùng các tên minh họa cũ `PC-HC-01`,
+`PC-KT-01` hoặc `PC-LD-01`.
 
 ## Quy tắc vẽ bản chính
 
