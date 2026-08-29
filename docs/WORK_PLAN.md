@@ -1,5 +1,17 @@
 # Phân công nhóm 2 thành viên
 
+## Bàn giao cuối ngày 29/08/2026
+
+- Nguyễn Minh Khôi thực hiện toàn bộ phần Packet Tracer còn lại: audit topology,
+  kiểm tra services, chạy T01-T12, Simulation Mode, chụp ảnh và smoke test sau
+  khi save.
+- Nguyễn Vũ Đức Duy tập trung viết report trên Prism và nhận bộ ảnh từ Khôi.
+- Việc Khôi nhận phần thực hành của Duy không thay đổi lịch sử đóng góp: Duy đã
+  phân tích yêu cầu, lập address plan, dựng topology, cấu hình router/switch và
+  static routing.
+- Khi quay demo, cả hai vẫn phải có audio vì đề yêu cầu mỗi thành viên thuyết
+  minh ít nhất một phần.
+
 ## Vai trò đề xuất
 
 ### Nguyễn Vũ Đức Duy (25127190) - Network lead
