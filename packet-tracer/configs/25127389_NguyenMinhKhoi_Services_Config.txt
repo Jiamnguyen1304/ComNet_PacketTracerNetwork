@@ -1,12 +1,15 @@
-PACKET TRACER PROJECT 3 - AS-BUILT SERVICES CHECKLIST
+PACKET TRACER PROJECT 3 - FINAL TARGET SERVICES CONFIG
 
 Owner: Nguyen Minh Khoi - 25127389
 XX: 90
-Nguon: topology.pkt hoan chinh va anh kiem tra ngay 2026-08-29
+Nguon: topology.pkt, anh kiem tra va quyet dinh final trong docs/NEXT_STEPS.md
+
+Luu y: gia tri STAFF/MEETING start .4 va passphrase ben duoi la cau hinh dich
+cuoi. Phai ap dung trong GUI va test DHCP/Wi-Fi truoc khi danh dau hoan thanh.
 
 
 ======================================================================
-1. DHCP-SRV - DA XAC NHAN
+1. DHCP-SRV - CAU HINH DICH CUOI
 ======================================================================
 
 Desktop > IP Configuration > Static
@@ -28,7 +31,7 @@ Maximum Users   : 10
 Pool Name       : POOL-STAFF
 Default Gateway : 172.90.11.1
 DNS Server      : 172.90.40.3
-Start IP Address: HUMAN_REQUIRED - chon pool trong GUI de ghi lai
+Start IP Address: 172.90.11.4
 Subnet Mask     : 255.255.255.224
 Maximum Users   : 20
 
@@ -49,7 +52,7 @@ Maximum Users   : 5
 Pool Name       : POOL-MEETING
 Default Gateway : 172.90.30.1
 DNS Server      : 172.90.40.3
-Start IP Address: HUMAN_REQUIRED - chon pool trong GUI de ghi lai
+Start IP Address: 172.90.30.4
 Subnet Mask     : 255.255.255.224
 Maximum Users   : 20
 
@@ -58,7 +61,7 @@ nay cho client; server subnet chi dung IP tinh.
 
 
 ======================================================================
-2. DNS-SRV - CAN CHUP ANH XAC NHAN
+2. DNS-SRV - CAU HINH DICH CUOI
 ======================================================================
 
 Desktop > IP Configuration > Static
@@ -80,7 +83,7 @@ Host Name: mmt-90.com
 
 
 ======================================================================
-3. WEB-SRV - CAN CHUP ANH XAC NHAN
+3. WEB-SRV - CAU HINH DICH CUOI
 ======================================================================
 
 Desktop > IP Configuration > Static
@@ -97,20 +100,20 @@ packet-tracer/web/index.html
 
 
 ======================================================================
-4. WI-FI - CAN CHUP ANH XAC NHAN
+4. WI-FI - CAU HINH DICH CUOI
 ======================================================================
 
 AP-STAFF
 SSID           : MMT-90-STAFF
 Authentication : WPA2-PSK
 Encryption     : AES
-Pass Phrase    : HUMAN_REQUIRED - doi chieu topology, khong can ghi vao report
+Pass Phrase    : MMT90@2026
 
 AP-MEETING
 SSID           : MMT-90-MEETING
 Authentication : WPA2-PSK
 Encryption     : AES
-Pass Phrase    : HUMAN_REQUIRED - doi chieu topology, khong can ghi vao report
+Pass Phrase    : MMT90@2026
 
 Hai AP khong cap DHCP, khong NAT va khong routing. Wireless client phai ket noi
 dung SSID/WPA2 va chon IP Configuration: DHCP.

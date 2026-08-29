@@ -30,7 +30,7 @@ Packet_tracer_project/
 |   |-- DEVICE_LIST.md             Danh sách thiết bị
 |   |-- LOGICAL_TOPOLOGY.md        Bảng kết nối và port
 |   |-- TEST_MATRIX.md             Ma trận 12 bài kiểm thử
-|   |-- NEXT_STEPS.md              Checklist tích hợp và mục cần con người làm
+|   |-- NEXT_STEPS.md              Hướng dẫn hoàn thành thô từ topology hiện tại
 |   |-- WORK_PLAN.md               Phân công cho 2 thành viên
 |   `-- ISSUES.md                  Lỗi gặp phải và cách xử lý
 |-- packet-tracer/

@@ -1,7 +1,7 @@
 # Kế hoạch địa chỉ thực tế
 
-Nguồn chuẩn của bảng này là running-config đã export từ topology hoàn chỉnh của
-Duy và ảnh cấu hình DHCP-SRV ngày 2026-08-29.
+Nguồn chuẩn của bảng này là running-config đã export, ảnh topology/DHCP ngày
+2026-08-29 và các quyết định cấu hình an toàn đã chốt trong `NEXT_STEPS.md`.
 
 ## Quy ước
 
@@ -71,13 +71,13 @@ Năm helper đã được xác nhận từ running-config và ảnh CLI.
 
 ## DHCP scope
 
-| Pool | Start đã thấy | End theo Max users | Max | Mask | Gateway | DNS |
+| Pool | Start IP cuối | End theo Max users | Max | Mask | Gateway | DNS |
 |---|---|---|---:|---|---|---|
 | POOL-ADMIN | `172.90.10.4` | `172.90.10.13` | 10 | `/28` | `172.90.10.1` | `172.90.40.3` |
-| POOL-STAFF | `HUMAN_REQUIRED` | Điền sau khi chọn pool trong GUI | 20 | `/27` | `172.90.11.1` | `172.90.40.3` |
+| POOL-STAFF | `172.90.11.4` | `172.90.11.23` | 20 | `/27` | `172.90.11.1` | `172.90.40.3` |
 | POOL-TECH | `172.90.20.5` | `172.90.20.9` | 5 | `/28` | `172.90.20.1` | `172.90.40.3` |
 | POOL-MGMT | `172.90.21.5` | `172.90.21.9` | 5 | `/28` | `172.90.21.1` | `172.90.40.3` |
-| POOL-MEETING | `HUMAN_REQUIRED` | Điền sau khi chọn pool trong GUI | 20 | `/27` | `172.90.30.1` | `172.90.40.3` |
+| POOL-MEETING | `172.90.30.4` | `172.90.30.23` | 20 | `/27` | `172.90.30.1` | `172.90.40.3` |
 
 `serverPool` là pool mặc định không xóa được của Server-PT. Nó không được dùng
 cho client vì toàn bộ thiết bị ở SERVER subnet dùng IP tĩnh; năm request từ xa
