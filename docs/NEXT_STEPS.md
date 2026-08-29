@@ -9,6 +9,8 @@
 - Khôi chỉ cần tạo đủ kết quả và ảnh thật để Duy chèn vào report.
 - File chuẩn duy nhất là `topology.pkt` ở thư mục gốc. Địa chỉ chuẩn nằm trong
   `docs/ADDRESSING_PLAN.md`.
+- Trước khi chạy test, đánh dấu xong checklist ngắn trong
+  `docs/CURRENT_TOPOLOGY_AUDIT.md`.
 
 ## 1. Trạng thái đã hoàn thành - không cần làm lại
 
@@ -46,16 +48,31 @@ Không chụp lại các ảnh đã có trừ khi topology bị sửa sau thời
 | TECH | `172.90.20.0/28` | `172.90.20.1` | `255.255.255.240` | Tự ghi theo topology |
 | MGMT | `172.90.21.0/28` | `172.90.21.1` | `255.255.255.240` | Tự ghi theo topology |
 | MEETING | `172.90.30.0/27` | `172.90.30.1` | `255.255.255.224` | Tự ghi theo topology |
+| SERVER | `172.90.40.0/28` | `172.90.40.1` | `255.255.255.240` | Kiểm tra mọi host tĩnh |
 
 ## 3. Kiểm tra phần topology và cấu hình của Duy
 
-Phần này là audit, không phải cấu hình lại từ đầu.
+Phần này là audit theo bố cục dọc hiện tại, không phải cấu hình lại từ đầu.
 
-- [ ] Chụp `D01-topology.png`: toàn bộ topology, bốn vùng tầng, hostname và
-  đường nối đều đọc được.
+- [ ] Xác nhận thứ tự từ trên xuống là tầng 4, tầng 3, tầng 2, tầng 1; SW-CORE
+  nằm bên phải trung tâm và chỉ nối R1-R4.
+- [ ] Chụp `D01-topology.png`: toàn bộ bốn vùng tầng, bốn router và SW-CORE.
+  Ảnh này chỉ cần chứng minh cấu trúc tổng thể, không ép mọi label phải đọc được.
+- [ ] Chụp thêm `D01-F1.png`, `D01-F2.png`, `D01-F3.png`, `D01-F4.png`; mỗi ảnh
+  phải đọc được router, switch/AP, endpoint, tên khu vực và đường nối của tầng.
 - [ ] Chụp `C02-backbone.png`: zoom SW-CORE cùng bốn router, bốn link đều xanh.
 - [ ] Đếm trực tiếp: 4 router 2911, 5 switch 2960-24TT, 2 Access Point-PT, 3
   Server-PT; không có WRT300N và không có serial link.
+- [ ] Kiểm tra nhánh tầng 1: SW-HC nối ADMIN vào R1/G0/0; AP-STAFF nối riêng vào
+  R1/G0/1; không nối ADMIN và STAFF chung một switch/subnet.
+- [ ] Kiểm tra nhánh tầng 2: SW-KT và SW-LD nối vào hai cổng LAN riêng của R2.
+- [ ] Kiểm tra nhánh tầng 3: AP-MEETING nối trực tiếp R3/G0/0.
+- [ ] Kiểm tra nhánh tầng 4: SW-SRV nối cụm host có dây và ba server vào R4/G0/0.
+- [ ] Đối chiếu số host: ADMIN 10 PC; TECH 5 PC; MGMT tối đa 5 PC. STAFF và
+  MEETING chỉ cần có wireless client đại diện nhưng phải association thật.
+- [ ] Đếm tầng 4: tối đa 10 host tính cả ba server, tức tối đa bảy PC/host bổ
+  sung. Chúng dùng `.40.5-.40.11`; chỉ mở rộng tới `.40.14` nếu giảng viên xác
+  nhận 10 máy là ngoài ba server. Tất cả đều static và không được trùng IP.
 - [ ] R1 CLI chạy `ping 172.90.255.4`; chụp `T11-r1-to-r4-backbone.png` khi
   thành công 5/5.
 - [ ] Nếu bất kỳ link hoặc test nào fail, chẩn đoán trước khi đụng đến route:
@@ -104,6 +121,14 @@ Các pool còn lại phải giữ đúng giá trị đã nhìn thấy: ADMIN b�
   `C09-ap-meeting.png`.
 - [ ] Laptop/smartphone STAFF và MEETING phải association đúng SSID rồi mới
   chọn DHCP. Ảnh không cần để lộ passphrase.
+
+### 4.5. Host tĩnh tầng 4
+
+- [ ] Mở từng PC/host trong vùng tầng 4; chọn Static, không chọn DHCP.
+- [ ] IP phải duy nhất trong `.40.5-.40.11`, mask `255.255.255.240`, gateway
+  `172.90.40.1`, DNS `172.90.40.3`.
+- [ ] Chọn ít nhất một host tầng 4 ping `.40.1`, `.40.3` và `.40.4` để phát hiện
+  IP trùng hoặc sai mask trước khi chạy test liên tầng.
 
 ## 5. Chứng minh DHCP trên đủ năm subnet
 

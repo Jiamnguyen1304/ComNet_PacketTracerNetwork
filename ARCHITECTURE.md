@@ -18,11 +18,23 @@ PC-LD -- SW-LD -- G0/1 R2           |
                                      |
 AP-MEETING ------ G0/0 R3 G0/1 ----+
                                      |
-Servers -- SW-SRV - G0/0 R4 G0/1 --+
+PC/host tĩnh + 3 server -- SW-SRV -- G0/0 R4 G0/1 --+
 ```
 
 `SW-CORE` chỉ phục vụ transit giữa bốn router. Không nối end-station vào
 `SW-CORE` và không tạo VLAN.
+
+### Bố cục vật lý hiện tại trên canvas
+
+Topology hiện tại xếp các vùng theo chiều dọc, từ trên xuống là tầng 4, tầng 3,
+tầng 2 và tầng 1. `SW-CORE` nằm lệch bên phải khu vực trung tâm; R1-R4 tạo bốn
+nhánh Ethernet riêng về core. Bố cục này chỉ thay đổi cách trình bày, không thay
+đổi sơ đồ logic, interface hay address plan.
+
+- Tầng 4: một access switch nối cụm host có dây và ba server, đi qua R4.
+- Tầng 3: AP-MEETING cùng wireless client, đi trực tiếp qua R3.
+- Tầng 2: hai access switch TECH và MGMT, cùng đi qua R2.
+- Tầng 1: access switch ADMIN và AP-STAFF là hai LAN vật lý riêng của R1.
 
 ## 3. Phân rã theo tầng
 
@@ -49,10 +61,12 @@ Servers -- SW-SRV - G0/0 R4 G0/1 --+
 
 ### Tầng 4
 
-- `R4/G0/0` phục vụ server room qua `SW-SRV`.
+- `R4/G0/0` phục vụ toàn bộ server room qua `SW-SRV`, gồm ba server dịch vụ và
+  các PC/host có dây đang được vẽ trong vùng tầng 4.
 - `R4/G0/1` nối `SW-CORE`.
 - `R4/G0/2` để trống và shutdown.
-- `DHCP-SRV`, `DNS-SRV`, `WEB-SRV` dùng static IP.
+- Mọi thiết bị trong SERVER subnet dùng static IP; DHCP không cấp địa chỉ cho
+  subnet này.
 
 ## 4. Mặt phẳng địa chỉ
 
@@ -73,6 +87,11 @@ Server được gán:
 - `WEB-SRV`: `172.90.40.4/28`.
 - Default gateway của cả ba: `172.90.40.1`.
 - DNS của server: `172.90.40.3`.
+
+Theo nghĩa mạng chuẩn, “tối đa 10 host” bao gồm cả ba server. Vì vậy tầng 4 chỉ
+nên có tối đa bảy PC/host bổ sung, dùng `.40.5-.40.11`; `.40.12-.40.14` để dự
+phòng. Chỉ dùng đủ 10 PC ngoài ba server nếu giảng viên đã xác nhận cách hiểu đó;
+trong mọi trường hợp không được để hai thiết bị trùng IP.
 
 ## 5. Static routing
 
@@ -144,7 +163,9 @@ subnet và DNS `172.90.40.3`. Năm LAN interface trên R1-R3 đều relay tới
 
 ## 11. Tiêu chí hoàn tất kiến trúc
 
-- Sơ đồ tự vẽ có đủ hostname, port, IP, mask và tên subnet.
+- Ảnh overview thể hiện đúng thứ tự tầng 4 -> 3 -> 2 -> 1 và bốn nhánh về
+  `SW-CORE`; ảnh chi tiết từng tầng phải đọc được hostname, port, IP/mask và tên
+  subnet.
 - Bảy subnet không chồng lấn.
 - Mỗi cổng router đúng vai trò trong bảng port allocation.
 - Tất cả interface đang dùng ở trạng thái up/up.

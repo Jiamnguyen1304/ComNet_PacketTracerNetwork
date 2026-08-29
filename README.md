@@ -25,6 +25,7 @@ Packet_tracer_project/
 |   |-- IMPLEMENTATION_GUIDE.md    Hướng dẫn chi tiết hơn 3.000 dòng
 |   |-- PROJECT_INFO.md            Thông tin nhóm, XX, domain và phiên bản
 |   |-- PROJECT_ANALYSIS.md        Phân tích yêu cầu từ đề bài
+|   |-- CURRENT_TOPOLOGY_AUDIT.md Audit bố cục hiện tại trước khi test
 |   |-- ADDRESSING_PLAN.md         Bảng subnet và IP
 |   |-- DEVICE_LIST.md             Danh sách thiết bị
 |   |-- LOGICAL_TOPOLOGY.md        Bảng kết nối và port
@@ -46,8 +47,8 @@ Packet_tracer_project/
     `-- demo-link.txt              Link video demo
 ```
 
-`topology.pkt` đã có bản khung. `Report.pdf` chỉ được thêm sau khi xuất bản báo
-cáo thật; không dùng file rỗng giả.
+`topology.pkt` tại thư mục gốc là bản topology đang tích hợp. `Report.pdf` chỉ
+được thêm sau khi xuất bản báo cáo thật; không dùng file rỗng giả.
 
 ## Thiết kế chính
 
@@ -74,7 +75,7 @@ cáo thật; không dùng file rỗng giả.
 
 ## File cần hoàn thiện trước khi nộp
 
-- `packet-tracer/topology.pkt`.
+- `topology.pkt` tại thư mục gốc.
 - Chín file trong `packet-tracer/configs/` là output `show running-config` thực
   tế đã export từ topology hoàn chỉnh.
 - `report/Report.pdf`.

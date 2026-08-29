@@ -1,5 +1,19 @@
 # Issues and Resolutions đã gặp thật
 
+## Issue 4 - Tài liệu endpoint và đường dẫn không khớp topology vật lý hiện tại
+
+- Triệu chứng: một số file dùng tên client minh họa như `PC-HC-01`, chỉ mô tả
+  ba server ở tầng 4 và trỏ nhầm tới `packet-tracer/topology.pkt`; ảnh overview
+  bố cục dọc cũng quá nhỏ để đọc label.
+- Nguyên nhân: tài liệu nền được viết trước khi topology cuối được bố trí lại và
+  thêm các cụm endpoint đầy đủ trên canvas.
+- Cách sửa: dùng `topology.pkt` ở thư mục gốc làm nguồn chuẩn; mô tả client theo
+  vai trò và tên/IP thật khi test; bổ sung cụm host static tầng 4; tách ảnh
+  overview và bốn ảnh zoom theo tầng.
+- Phòng ngừa: không đưa display name hoặc port chưa xác nhận từ GUI vào report;
+  sau mỗi lần đổi bố cục phải review `LOGICAL_TOPOLOGY.md`, `DEVICE_LIST.md` và
+  `SCREENSHOT_INDEX.md`.
+
 ## Issue 1 - Tài liệu dịch vụ lệch address plan của topology cuối
 
 - Thời điểm: 2026-08-29, sau khi pull bản hoàn chỉnh từ DuyVu.

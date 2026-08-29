@@ -26,17 +26,21 @@ Tracer và cung cấp ảnh thật. Tất cả ảnh đặt trong `report/images
 
 | Thứ tự | ID/file | Màn hình phải thấy | Điều kiện PASS |
 |---:|---|---|---|
-| 1 | `D01-topology.png` | Toàn cảnh bốn tầng | Thiết bị, hostname, vùng tầng và dây nối đọc được |
-| 2 | `C02-backbone.png` | SW-CORE và R1-R4 | Bốn link backbone đều xanh |
-| 3 | `C05C-pool-staff.png` | Chi tiết POOL-STAFF | GW `.11.1`, DNS `.40.3`, `/27`, max 20 |
-| 4 | `C05D-pool-meeting.png` | Chi tiết POOL-MEETING | GW `.30.1`, DNS `.40.3`, `/27`, max 20 |
-| 5 | `C06A-dns-server-ip.png` | Desktop/IP của DNS-SRV | `.40.3/28`, GW `.40.1`, DNS `.40.3` |
-| 6 | `C06B-dns-records.png` | Services/DNS | A và CNAME đúng, service On |
-| 7 | `C07A-web-server-ip.png` | Desktop/IP của WEB-SRV | `.40.4/28`, GW `.40.1`, DNS `.40.3` |
-| 8 | `C07B-web-http.png` | Services/HTTP | HTTP On, HTML đã tùy biến |
-| 9 | `C07C-web-content.png` | Browser qua domain | Trang nhóm mở bằng `www.mmt-90.com` |
-| 10 | `C08-ap-staff.png` | AP tầng 1 | `MMT-90-STAFF`, WPA2-PSK/AES |
-| 11 | `C09-ap-meeting.png` | AP tầng 3 | `MMT-90-MEETING`, WPA2-PSK/AES |
+| 1 | `D01-topology.png` | Overview bố cục dọc | Từ trên xuống: tầng 4, 3, 2, 1; thấy bốn nhánh về core |
+| 2 | `D01-F1.png` | Zoom tầng 1 | Đọc được ADMIN, STAFF, R1, SW-HC, AP và endpoint |
+| 3 | `D01-F2.png` | Zoom tầng 2 | Đọc được TECH, MGMT, R2 và hai access switch |
+| 4 | `D01-F3.png` | Zoom tầng 3 | Đọc được MEETING, R3, AP và wireless client |
+| 5 | `D01-F4.png` | Zoom tầng 4 | Đọc được R4, SW-SRV; tổng host gồm ba server không quá 10 |
+| 6 | `C02-backbone.png` | SW-CORE và R1-R4 | Bốn link backbone đều xanh |
+| 7 | `C05C-pool-staff.png` | Chi tiết POOL-STAFF | GW `.11.1`, DNS `.40.3`, `/27`, max 20 |
+| 8 | `C05D-pool-meeting.png` | Chi tiết POOL-MEETING | GW `.30.1`, DNS `.40.3`, `/27`, max 20 |
+| 9 | `C06A-dns-server-ip.png` | Desktop/IP của DNS-SRV | `.40.3/28`, GW `.40.1`, DNS `.40.3` |
+| 10 | `C06B-dns-records.png` | Services/DNS | A và CNAME đúng, service On |
+| 11 | `C07A-web-server-ip.png` | Desktop/IP của WEB-SRV | `.40.4/28`, GW `.40.1`, DNS `.40.3` |
+| 12 | `C07B-web-http.png` | Services/HTTP | HTTP On, HTML đã tùy biến |
+| 13 | `C07C-web-content.png` | Browser qua domain | Trang nhóm mở bằng `www.mmt-90.com` |
+| 14 | `C08-ap-staff.png` | AP tầng 1 | `MMT-90-STAFF`, WPA2-PSK/AES |
+| 15 | `C09-ap-meeting.png` | AP tầng 3 | `MMT-90-MEETING`, WPA2-PSK/AES |
 
 Nếu một cửa sổ không thể hiển thị đồng thời IP và trạng thái dịch vụ thì dùng
 hai ảnh như C07A/C07B; không ghép ảnh khiến chữ bị nhỏ hoặc mờ.
@@ -45,24 +49,24 @@ hai ảnh như C07A/C07B; không ghép ảnh khiến chữ bị nhỏ hoặc m�
 
 | Thứ tự | ID/file | Kết quả phải thấy |
 |---:|---|---|
-| 12 | `T06A-admin-dhcp.png` | ADMIN: `172.90.10.x/28`, GW `.10.1`, DNS `.40.3` |
-| 13 | `T06B-staff-dhcp.png` | STAFF: `172.90.11.x/27`, GW `.11.1`, DNS `.40.3` |
-| 14 | `T06C-tech-dhcp.png` | TECH: `172.90.20.x/28`, GW `.20.1`, DNS `.40.3` |
-| 15 | `T06D-mgmt-dhcp.png` | MGMT: `172.90.21.x/28`, GW `.21.1`, DNS `.40.3` |
-| 16 | `T06E-meeting-dhcp.png` | MEETING: `172.90.30.x/27`, GW `.30.1`, DNS `.40.3`; dùng lại cho T12 |
-| 17 | `T01-admin-to-gateway.png` | ADMIN ping `172.90.10.1` thành công |
-| 18 | `T02-admin-to-tech.png` | ADMIN ping IP thật của TECH thành công |
-| 19 | `T03-mgmt-to-web.png` | MGMT ping `172.90.40.4` thành công |
-| 20 | `T04-meeting-to-admin.png` | MEETING wireless ping ADMIN thành công |
-| 21 | `T05-staff-to-admin.png` | STAFF wireless ping ADMIN thành công |
-| 22 | `T07-dns-a.png` | `nslookup mmt-90.com` trả `.40.4` |
-| 23 | `T08-dns-cname.png` | `nslookup www.mmt-90.com` trả `.40.4` |
-| 24 | `T09A-web-admin.png` | Website bằng domain từ ADMIN |
-| 25 | `T09B-web-staff.png` | Website bằng domain từ STAFF |
-| 26 | `T09C-web-tech.png` | Website bằng domain từ TECH |
-| 27 | `T09D-web-mgmt.png` | Website bằng domain từ MGMT |
-| 28 | `T09E-web-meeting.png` | Website bằng domain từ MEETING |
-| 29 | `T11-r1-to-r4-backbone.png` | R1 ping `172.90.255.4` thành công 5/5 |
+| 16 | `T06A-admin-dhcp.png` | ADMIN: `172.90.10.x/28`, GW `.10.1`, DNS `.40.3` |
+| 17 | `T06B-staff-dhcp.png` | STAFF: `172.90.11.x/27`, GW `.11.1`, DNS `.40.3` |
+| 18 | `T06C-tech-dhcp.png` | TECH: `172.90.20.x/28`, GW `.20.1`, DNS `.40.3` |
+| 19 | `T06D-mgmt-dhcp.png` | MGMT: `172.90.21.x/28`, GW `.21.1`, DNS `.40.3` |
+| 20 | `T06E-meeting-dhcp.png` | MEETING: `172.90.30.x/27`, GW `.30.1`, DNS `.40.3`; dùng lại cho T12 |
+| 21 | `T01-admin-to-gateway.png` | ADMIN ping `172.90.10.1` thành công |
+| 22 | `T02-admin-to-tech.png` | ADMIN ping IP thật của TECH thành công |
+| 23 | `T03-mgmt-to-web.png` | MGMT ping `172.90.40.4` thành công |
+| 24 | `T04-meeting-to-admin.png` | MEETING wireless ping ADMIN thành công |
+| 25 | `T05-staff-to-admin.png` | STAFF wireless ping ADMIN thành công |
+| 26 | `T07-dns-a.png` | `nslookup mmt-90.com` trả `.40.4` |
+| 27 | `T08-dns-cname.png` | `nslookup www.mmt-90.com` trả `.40.4` |
+| 28 | `T09A-web-admin.png` | Website bằng domain từ ADMIN |
+| 29 | `T09B-web-staff.png` | Website bằng domain từ STAFF |
+| 30 | `T09C-web-tech.png` | Website bằng domain từ TECH |
+| 31 | `T09D-web-mgmt.png` | Website bằng domain từ MGMT |
+| 32 | `T09E-web-meeting.png` | Website bằng domain từ MEETING |
+| 33 | `T11-r1-to-r4-backbone.png` | R1 ping `172.90.255.4` thành công 5/5 |
 
 T10A-D đã có. T12 dùng lại T06E, vì cùng chứng minh laptop MEETING nhận địa chỉ
 thuộc `172.90.30.0/27`.
@@ -71,8 +75,8 @@ thuộc `172.90.30.0/27`.
 
 | Thứ tự | ID/file | Event bắt buộc |
 |---:|---|---|
-| 30 | `SIM-DHCP.png` | Discover, Offer, Request, ACK qua R1 tới `172.90.40.2` |
-| 31 | `SIM-DNS-HTTP.png` | DNS query/response tới `.40.3`, sau đó TCP/HTTP tới `.40.4` |
+| 34 | `SIM-DHCP.png` | Discover, Offer, Request, ACK qua R1 tới `172.90.40.2` |
+| 35 | `SIM-DNS-HTTP.png` | DNS query/response tới `.40.3`, sau đó TCP/HTTP tới `.40.4` |
 
 ## 5. Quy tắc chụp để Duy dùng thẳng trên Prism
 
@@ -84,8 +88,8 @@ thuộc `172.90.30.0/27`.
 - Khi ping lần đầu timeout vì ARP, chạy lại rồi chụp lần thành công.
 - Nếu test fail, lưu ảnh chẩn đoán với hậu tố `-debug`; không dùng ảnh debug làm
   bằng chứng PASS.
-- D01 có thể đồng thời minh họa bố cục; vẫn nên có C02 riêng để bốn link core đủ
-  lớn và rõ.
+- D01 chỉ minh họa cấu trúc tổng thể. Với bố cục dọc hiện tại, D01-F1 đến D01-F4
+  là ảnh bắt buộc để tên thiết bị và nhãn khu vực đủ lớn, rõ.
 - C07C có thể dùng lại làm một trong các ảnh T09 nếu thấy rõ client/subnet; để
   an toàn khi chấm, vẫn chụp đủ T09A-E.
 

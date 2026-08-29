@@ -28,8 +28,9 @@ thời điểm; cấu hình text được đồng bộ qua Git.
 
 Văn phòng gồm bốn tầng và sáu khu vực nghiệp vụ. Tầng 1 có mạng có dây cho hành
 chính và Wi-Fi nhân viên; tầng 2 có mạng kỹ thuật và lãnh đạo; tầng 3 có Wi-Fi
-phòng họp; tầng 4 đặt ba server DHCP, DNS và WEB. Năm client subnet phải nhận
-địa chỉ động từ một DHCP Server tập trung. Các server sử dụng IP tĩnh.
+phòng họp; tầng 4 có cụm host có dây cùng ba server DHCP, DNS và WEB. Năm client
+subnet tầng 1-3 nhận địa chỉ động từ một DHCP Server tập trung; toàn bộ thiết bị
+trong SERVER subnet dùng địa chỉ tĩnh.
 
 Theo ràng buộc đề bài, mỗi subnet nối vào một cổng router vật lý riêng; bốn
 router dùng chung một Ethernet backbone. Nhóm không dùng VLAN, serial link,
@@ -51,9 +52,11 @@ Website được nghiệm thu bằng domain thay vì địa chỉ IP.
 ### Lý do subnetting
 
 Prefix `/28` cung cấp 14 địa chỉ usable. Kích thước này đủ cho ADMIN với 10
-client và gateway, đủ cho TECH/MGMT với tối đa 5 client, và đủ cho server room
-gồm gateway cùng ba server. Prefix `/27` cung cấp 30 địa chỉ usable, đáp ứng tối
-đa 20 thiết bị cho mỗi WLAN STAFF và MEETING, đồng thời còn địa chỉ dự phòng.
+client và gateway, đủ cho TECH/MGMT với tối đa 5 client. Ở SERVER subnet, gateway
+và ba service server dùng `.40.1-.40.4`. Vì giới hạn 10 host tính cả ba server,
+tối đa bảy host có dây bổ sung dùng `.40.5-.40.11`; ba địa chỉ `.40.12-.40.14`
+được dự phòng. Prefix `/27` cung cấp 30 địa chỉ usable, đáp ứng tối đa 20 thiết
+bị cho mỗi WLAN STAFF và MEETING.
 Backbone `/29` có 6 địa chỉ usable, đủ cho bốn router và hai địa chỉ dự phòng.
 
 Cách đặt third octet `10/11`, `20/21`, `30`, `40` giúp nhận biết tầng/khu vực
@@ -69,7 +72,9 @@ nhanh khi đọc route table. Thiết kế VLSM không có subnet chồng lấn.
 
 ## 5. Kiến trúc và thiết bị
 
-Mỗi tầng có một Cisco 2911. R1 làm gateway cho ADMIN/STAFF; R2 cho TECH/MGMT;
+Canvas hiện tại xếp dọc từ trên xuống là tầng 4, tầng 3, tầng 2 và tầng 1;
+SW-CORE nằm bên phải trung tâm. Mỗi tầng có một Cisco 2911. R1 làm gateway cho
+ADMIN/STAFF; R2 cho TECH/MGMT;
 R3 cho MEETING; R4 cho SERVER. Bốn router nối SW-CORE 2960-24TT bằng backbone
 `172.90.255.0/29`, lần lượt dùng `.1`, `.2`, `.3`, `.4`. Bốn access switch nối
 các mạng có dây; hai Access Point-PT bridge các WLAN vào R1 và R3.
@@ -126,7 +131,7 @@ DNS-SRV dự kiến có A record `mmt-90.com -> 172.90.40.4` và CNAME
 dùng mở `www.mmt-90.com`, client truy vấn DNS, nhận IP WEB-SRV, thiết lập TCP và
 gửi HTTP request. Website hiển thị `XX = 90`, họ tên và MSSV hai thành viên.
 
-`[CHÈN C06A-B, C07A-B, T07-T09]`
+`[CHÈN C06A-B, C07A-C, T07-T09]`
 
 AP-STAFF phát `MMT-90-STAFF`; AP-MEETING phát `MMT-90-MEETING`. Hai AP hoạt động
 ở chế độ bridge, không NAT/routing/DHCP và dùng WPA2-PSK/AES. Địa chỉ wireless

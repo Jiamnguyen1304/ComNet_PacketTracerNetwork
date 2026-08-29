@@ -17,6 +17,10 @@ và demo có thuyết minh.
 | 3 | Phòng họp | Tối đa 20 | Wireless | DHCP |
 | 4 | Server room | Tối đa 10 host | Wired | Static |
 
+Trong bảng này, `host` là mọi endpoint có địa chỉ IP, bao gồm Server-PT. Vì đã
+có ba service server, tầng 4 còn tối đa bảy PC/host bổ sung nếu không có xác
+nhận khác từ giảng viên.
+
 ## Thiết bị bắt buộc
 
 - 4 router Cisco 2911: `R1`, `R2`, `R3`, `R4`.
@@ -24,8 +28,10 @@ và demo có thuyết minh.
 - 4 switch Cisco 2960-24TT: `SW-HC`, `SW-KT`, `SW-LD`, `SW-SRV`.
 - 2 Access Point-PT: `AP-STAFF`, `AP-MEETING`.
 - 3 Server-PT: `DHCP-SRV`, `DNS-SRV`, `WEB-SRV`.
-- 1-2 PC mỗi subnet để kiểm thử.
-- 1-2 laptop hoặc smartphone mỗi SSID để kiểm thử.
+- Topology hiện tại có các cụm PC theo từng phòng; khi nghiệm thu chỉ cần chọn
+  ít nhất một client đại diện của mỗi subnet động để chạy test và chụp ảnh.
+- Mỗi SSID phải có ít nhất một laptop hoặc smartphone thực sự association và
+  nhận DHCP; số icon còn lại dùng để minh họa quy mô tối đa.
 
 ## Dịch vụ bắt buộc
 
@@ -68,8 +74,19 @@ và demo có thuyết minh.
 - `demo.mp4` hoặc link video dài 6-10 phút, có audio.
 - Mỗi thành viên thuyết minh ít nhất một phần.
 
+## Đối chiếu bố cục topology hiện tại
+
+- Canvas xếp từ trên xuống: tầng 4, tầng 3, tầng 2 và tầng 1.
+- SW-CORE đặt bên phải trung tâm và chỉ nối bốn router.
+- Tầng 4 có SW-SRV, cụm host có dây và ba server.
+- Tầng 3 có AP-MEETING cùng wireless client.
+- Tầng 2 có hai switch riêng cho TECH và MGMT.
+- Tầng 1 có SW-HC cho ADMIN và AP-STAFF cho WLAN.
+
+Bố cục vật lý khác hình minh họa cũ nhưng vẫn đúng kiến trúc logic miễn là mỗi
+nhánh dùng interface/subnet trong `ADDRESSING_PLAN.md`.
+
 ## Điểm cần xác nhận
 
 Đề dùng mẫu tên file có ba MSSV nhưng repository này phục vụ nhóm hai người.
 Nhóm cần hỏi giảng viên tên zip chính xác và ghi lại câu trả lời trước khi nộp.
-

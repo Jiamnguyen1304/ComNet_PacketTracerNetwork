@@ -17,7 +17,7 @@
 | Tầng 1 | Access switch | SW-HC | Cisco 2960-24TT | Kết nối PC hành chính |
 | Tầng 2 | Access switch | SW-KT | Cisco 2960-24TT | Kết nối PC kỹ thuật |
 | Tầng 2 | Access switch | SW-LD | Cisco 2960-24TT | Kết nối PC lãnh đạo |
-| Tầng 4 | Access switch | SW-SRV | Cisco 2960-24TT | Kết nối ba server |
+| Tầng 4 | Access switch | SW-SRV | Cisco 2960-24TT | Kết nối cụm host tĩnh và ba server |
 
 ## Wireless
 
@@ -34,12 +34,17 @@
 | Tầng 4 | DNS-SRV | Server-PT | A + CNAME | 172.90.40.3/28 |
 | Tầng 4 | WEB-SRV | Server-PT | HTTP | 172.90.40.4/28 |
 
-## End devices đề xuất
+## End devices theo kiến trúc hiện tại
 
-| Subnet | Thiết bị kiểm thử | Tên đề xuất |
+| Subnet | Cụm thiết bị thể hiện trên canvas | Mục cần xác nhận |
 |---|---|---|
-| Administration | 2 PC-PT | PC-HC-01, PC-HC-02 |
-| Staff Wi-Fi | 1 Laptop-PT, 1 Smartphone-PT | LAP-STAFF-01, PHONE-STAFF-01 |
-| Technical | 2 PC-PT | PC-KT-01, PC-KT-02 |
-| Management | 1 PC-PT | PC-LD-01 |
-| Meeting Wi-Fi | 1 Laptop-PT, 1 Smartphone-PT | LAP-MEETING-01, PHONE-MEETING-01 |
+| ADMIN | Cụm PC-PT có dây qua SW-HC | Có đủ 10 PC và tất cả dùng DHCP |
+| STAFF | Các wireless client qua AP-STAFF | Đúng SSID; ít nhất một client nhận DHCP |
+| TECH | Cụm PC-PT có dây qua SW-KT | Có đủ 5 PC và tất cả dùng DHCP |
+| MGMT | Cụm PC-PT có dây qua SW-LD | Không quá 5 PC và tất cả dùng DHCP |
+| MEETING | Các wireless client qua AP-MEETING | Đúng SSID; ít nhất một client nhận DHCP |
+| SERVER | Tối đa 7 PC/host có dây cùng 3 Server-PT qua SW-SRV | Tổng tối đa 10 host; tất cả static, không trùng IP |
+
+Ảnh overview hiện tại bị thu nhỏ nên không dùng nó để khẳng định display name
+hoặc đếm từng wireless client. Hai việc đó phải được xác nhận trực tiếp trong
+Packet Tracer trước khi chốt inventory.

@@ -4,6 +4,10 @@
 > hoàn tất và còn dùng ký hiệu `XX`/địa chỉ ví dụ. Khi có khác biệt, luôn ưu tiên
 > `docs/ADDRESSING_PLAN.md`, running-config trong `packet-tracer/configs/` và
 > `topology.pkt`. Không copy các địa chỉ ví dụ trong guide vào report cuối.
+> Các tên `PC-HC-01`, `PC-KT-01`, `PC-LD-01`, `LAP-STAFF-01` và
+> `LAP-MEETING-01` trong guide chỉ là **role alias**, không được coi là display
+> name thật. Topology hiện tại xếp dọc tầng 4 -> 3 -> 2 -> 1; khi chạy test phải
+> ghi đúng tên và IP đang hiển thị trên client thực tế.
 
 > Phạm vi: mạng văn phòng 4 tầng, nhóm 2 thành viên, Cisco Packet Tracer 8.2+.
 >
@@ -461,7 +465,7 @@ Kiểm tra version trong Help hoặc About.
 
 Ghi version vào `docs/PROJECT_INFO.md`.
 
-Save As vào `packet-tracer/topology.pkt`.
+Save As vào `topology.pkt` ở thư mục gốc repository.
 
 Không save bản chính trong Downloads.
 

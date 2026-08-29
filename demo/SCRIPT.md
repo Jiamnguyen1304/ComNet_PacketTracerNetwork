@@ -12,6 +12,10 @@
 | 5:15-8:30 | Chạy các nhóm test trong test matrix | Duy và Khôi |
 | 8:30-9:30 | Simulation Mode và kết luận | Duy và Khôi |
 
+Khi giới thiệu overview, nói rõ canvas xếp từ trên xuống tầng 4 -> 3 -> 2 -> 1;
+SW-CORE nằm bên phải trung tâm và nối riêng tới R1-R4. Sau ảnh overview cần zoom
+từng tầng vì hostname/nhãn không đọc được ở mức thu toàn bộ canvas.
+
 ## Các màn hình phải chuẩn bị trước khi quay
 
 - R1 CLI tại `show ip route` và `show running-config | include helper-address`.

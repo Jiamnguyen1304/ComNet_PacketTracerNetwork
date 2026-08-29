@@ -43,6 +43,21 @@ Duy và ảnh cấu hình DHCP-SRV ngày 2026-08-29.
 
 Gateway của ba server là `172.90.40.1`. DNS dùng chung là `172.90.40.3`.
 
+### Địa chỉ static còn lại của tầng 4
+
+Sau R4 và ba server, SERVER subnet còn dải `172.90.40.5-172.90.40.14`. Theo yêu
+cầu tối đa 10 host, ba server được tính là ba host, nên chỉ gán thêm tối đa bảy
+PC/host trong `.40.5-.40.11`; dùng gateway `172.90.40.1` và DNS `172.90.40.3`.
+
+| Vai trò | Dải đề xuất | Số địa chỉ | Ghi chú |
+|---|---|---:|---|
+| PC/host tĩnh tầng 4 | `172.90.40.5-172.90.40.11` | 7 | Cộng ba server thành tối đa 10 host |
+| Dự phòng | `172.90.40.12-172.90.40.14` | 3 | Không gán nếu đề không yêu cầu |
+
+`/28` có 14 địa chỉ usable. Gateway + tối đa 10 host sử dụng 11 địa chỉ, còn ba
+địa chỉ dự phòng. Nếu giảng viên xác nhận “10 máy” là ngoài ba service server,
+có thể mở rộng client đến `.40.14`, nhưng khi đó subnet sẽ kín hoàn toàn.
+
 ## DHCP relay
 
 | Router | Interface nhận broadcast | Helper address |
@@ -72,7 +87,8 @@ cho client vì toàn bộ thiết bị ở SERVER subnet dùng IP tĩnh; năm re
 ## Lý do chọn prefix
 
 - `/28` có 14 địa chỉ usable. ADMIN cần 10 client và một gateway; TECH/MGMT
-  cần tối đa 5 client; SERVER cần gateway và ba server, nên `/28` đáp ứng đủ.
+  cần tối đa 5 client. SERVER dùng một gateway và tối đa 10 host tính cả ba
+  service server, nên vẫn còn ba địa chỉ usable dự phòng.
 - `/27` có 30 địa chỉ usable, đủ tối đa 20 wireless client, gateway và phần
   địa chỉ dự phòng cho STAFF và MEETING.
 - `/29` có 6 địa chỉ usable, đủ bốn router backbone và còn hai địa chỉ dự phòng.
