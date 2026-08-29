@@ -58,59 +58,51 @@ Servers -- SW-SRV - G0/0 R4 G0/1 --+
 
 | Segment | Router interface | Network | Gateway/router IP |
 |---|---|---|---|
-| Administration | `R1/G0/0` | `172.90.10.0/27` | `172.90.10.1` |
-| Staff Wi-Fi | `R1/G0/1` | `172.90.20.0/27` | `172.90.20.1` |
-| Technical | `R2/G0/0` | `172.90.30.0/28` | `172.90.30.1` |
-| Management | `R2/G0/1` | `172.90.40.0/28` | `172.90.40.1` |
-| Meeting Wi-Fi | `R3/G0/0` | `172.90.50.0/27` | `172.90.50.1` |
-| Server | `R4/G0/0` | `172.90.60.0/28` | `172.90.60.1` |
-| Backbone | `R1-4 backbone ports` | `172.90.255.248/29` | `.249` đến `.252` |
+| Administration | `R1/G0/0` | `172.90.10.0/28` | `172.90.10.1` |
+| Staff Wi-Fi | `R1/G0/1` | `172.90.11.0/27` | `172.90.11.1` |
+| Technical | `R2/G0/0` | `172.90.20.0/28` | `172.90.20.1` |
+| Management | `R2/G0/1` | `172.90.21.0/28` | `172.90.21.1` |
+| Meeting Wi-Fi | `R3/G0/0` | `172.90.30.0/27` | `172.90.30.1` |
+| Server | `R4/G0/0` | `172.90.40.0/28` | `172.90.40.1` |
+| Backbone | `R1-4 backbone ports` | `172.90.255.0/29` | `.1` đến `.4` |
 
 Server được gán:
 
-- `DHCP-SRV`: `172.90.60.10/28`.
-- `DNS-SRV`: `172.90.60.11/28`.
-- `WEB-SRV`: `172.90.60.12/28`.
-- Default gateway của cả ba: `172.90.60.1`.
-- DNS của server: `172.90.60.11` khi giao diện Packet Tracer cho phép.
+- `DHCP-SRV`: `172.90.40.2/28`.
+- `DNS-SRV`: `172.90.40.3/28`.
+- `WEB-SRV`: `172.90.40.4/28`.
+- Default gateway của cả ba: `172.90.40.1`.
+- DNS của server: `172.90.40.3`.
 
 ## 5. Static routing
 
 Mỗi router có route explicit tới các mạng không trực tiếp kết nối. Next hop luôn
 là địa chỉ backbone của router đích sở hữu mạng đó:
 
-- R1 đi mạng tầng 2 qua `172.90.255.250`.
-- R1 đi mạng tầng 3 qua `172.90.255.251`.
-- R1 đi mạng tầng 4 qua `172.90.255.252`.
-- R2 đi mạng tầng 1 qua `172.90.255.249`.
-- R2 đi mạng tầng 3 qua `172.90.255.251`.
-- R2 đi mạng tầng 4 qua `172.90.255.252`.
-- R3 đi mạng tầng 1 qua `172.90.255.249`.
-- R3 đi mạng tầng 2 qua `172.90.255.250`.
-- R3 đi mạng tầng 4 qua `172.90.255.252`.
-- R4 đi mạng tầng 1 qua `172.90.255.249`.
-- R4 đi mạng tầng 2 qua `172.90.255.250`.
-- R4 đi mạng tầng 3 qua `172.90.255.251`.
+- R1 đi hai mạng tầng 2 qua `172.90.255.2`, tầng 3 qua `.3`, tầng 4 qua `.4`.
+- R2 đi hai mạng tầng 1 qua `172.90.255.1`, tầng 3 qua `.3`, tầng 4 qua `.4`.
+- R3 đi hai mạng tầng 1 qua `172.90.255.1`, hai mạng tầng 2 qua `.2` và tầng 4 qua `.4`.
+- R4 đi hai mạng tầng 1 qua `172.90.255.1`, hai mạng tầng 2 qua `.2` và tầng 3 qua `.3`.
 
 Không khai báo route tới mạng `connected`. Không bật dynamic routing.
 
 ## 6. DHCP
 
-`DHCP-SRV` giữ năm pool. Mỗi pool trả về gateway của chính subnet và DNS
-`172.90.60.11`. Pool bắt đầu từ host `.10` để dành `.1-.9` cho gateway, AP và
-hạ tầng tương lai.
+`DHCP-SRV` tại `172.90.40.2` giữ năm pool. Mỗi pool trả về gateway của chính
+subnet và DNS `172.90.40.3`. Năm LAN interface trên R1-R3 đều relay tới
+`172.90.40.2`.
 
 | Pool | Start IP | Mask | Gateway | Max users |
 |---|---|---|---|---:|
-| `POOL-ADMIN` | `172.90.10.10` | `255.255.255.224` | `172.90.10.1` | 10 |
-| `POOL-STAFF` | `172.90.20.10` | `255.255.255.224` | `172.90.20.1` | 20 |
-| `POOL-TECH` | `172.90.30.10` | `255.255.255.240` | `172.90.30.1` | 5 |
-| `POOL-MGMT` | `172.90.40.10` | `255.255.255.240` | `172.90.40.1` | 5 |
-| `POOL-MEETING` | `172.90.50.10` | `255.255.255.224` | `172.90.50.1` | 20 |
+| `POOL-ADMIN` | `172.90.10.4` | `255.255.255.240` | `172.90.10.1` | 10 |
+| `POOL-STAFF` | `HUMAN_REQUIRED` | `255.255.255.224` | `172.90.11.1` | 20 |
+| `POOL-TECH` | `172.90.20.5` | `255.255.255.240` | `172.90.20.1` | 5 |
+| `POOL-MGMT` | `172.90.21.5` | `255.255.255.240` | `172.90.21.1` | 5 |
+| `POOL-MEETING` | `HUMAN_REQUIRED` | `255.255.255.224` | `172.90.30.1` | 20 |
 
 ## 7. DNS và Web
 
-- DNS A record: `mmt-90.com` -> `172.90.60.12`.
+- DNS A record: `mmt-90.com` -> `172.90.40.4`.
 - DNS CNAME: `www.mmt-90.com` -> `mmt-90.com`.
 - HTTP bật trên `WEB-SRV`.
 - `index.html` phải hiển thị công ty, tên nhóm, `XX`, MSSV và họ tên.
@@ -129,7 +121,7 @@ hạ tầng tương lai.
 
 | Artifact | Nguồn chuẩn | Cách hợp nhất |
 |---|---|---|
-| Topology | `packet-tracer/topology.pkt` | Một người sửa tại một thời điểm |
+| Topology | `topology.pkt` | Một người sửa tại một thời điểm |
 | Router config | `packet-tracer/configs/` | Text review được qua Git |
 | Switch config | `packet-tracer/configs/` | Text review được qua Git |
 | Website | `packet-tracer/web/index.html` | Hai thành viên kiểm tra chéo |
@@ -140,7 +132,8 @@ hạ tầng tương lai.
 ## 10. Quyết định kiến trúc
 
 - Dùng hybrid prefix thay vì một prefix duy nhất để cân bằng dễ nhớ và hiệu quả.
-- Dùng third octet theo bội số 10 để đọc ảnh cấu hình nhanh.
+- Dùng third octet theo tầng: `10/11` cho tầng 1, `20/21` cho tầng 2, `30`
+  cho tầng 3 và `40` cho tầng 4.
 - Dùng first usable làm gateway trên toàn hệ thống.
 - Dùng server riêng cho DHCP thay vì R4 để vai trò dịch vụ tách bạch và dễ chụp
   minh chứng trên giao diện Packet Tracer.

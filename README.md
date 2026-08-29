@@ -53,13 +53,13 @@ cáo thật; không dùng file rỗng giả.
 
 | Khu vực | Network | Gateway | Cấp IP |
 |---|---|---|---|
-| Hành chính tầng 1 | `172.90.10.0/27` | `172.90.10.1` | DHCP |
-| Wi-Fi tầng 1 | `172.90.20.0/27` | `172.90.20.1` | DHCP |
-| Kỹ thuật tầng 2 | `172.90.30.0/28` | `172.90.30.1` | DHCP |
-| Lãnh đạo tầng 2 | `172.90.40.0/28` | `172.90.40.1` | DHCP |
-| Wi-Fi phòng họp tầng 3 | `172.90.50.0/27` | `172.90.50.1` | DHCP |
-| Server tầng 4 | `172.90.60.0/28` | `172.90.60.1` | Static |
-| Backbone | `172.90.255.248/29` | Không áp dụng | Static |
+| Hành chính tầng 1 | `172.90.10.0/28` | `172.90.10.1` | DHCP |
+| Wi-Fi tầng 1 | `172.90.11.0/27` | `172.90.11.1` | DHCP |
+| Kỹ thuật tầng 2 | `172.90.20.0/28` | `172.90.20.1` | DHCP |
+| Lãnh đạo tầng 2 | `172.90.21.0/28` | `172.90.21.1` | DHCP |
+| Wi-Fi phòng họp tầng 3 | `172.90.30.0/27` | `172.90.30.1` | DHCP |
+| Server tầng 4 | `172.90.40.0/28` | `172.90.40.1` | Static |
+| Backbone | `172.90.255.0/29` | Không áp dụng | Static |
 
 ## Quy tắc bắt buộc
 
@@ -75,8 +75,8 @@ cáo thật; không dùng file rỗng giả.
 ## File cần hoàn thiện trước khi nộp
 
 - `packet-tracer/topology.pkt`.
-- Chín file trong `packet-tracer/configs/` phải được thay bằng output
-  `show running-config` thực tế sau khi tích hợp.
+- Chín file trong `packet-tracer/configs/` là output `show running-config` thực
+  tế đã export từ topology hoàn chỉnh.
 - `report/Report.pdf`.
 - Ảnh minh chứng trong `report/images/`.
 - `demo/demo-link.txt` chứa link xem được.

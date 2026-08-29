@@ -1,12 +1,15 @@
 # Khung báo cáo kỹ thuật
 
+Nội dung kỹ thuật đã điền theo topology cuối nằm trong
+`REPORT_DRAFT_CONTENT.md`. Dùng `SCREENSHOT_INDEX.md` để chèn đúng ảnh và không
+đánh dấu kết quả chưa chạy là PASS.
+
 ## 1. Trang bìa
 
 - Tên môn học.
 - Tên đồ án.
 - Tên nhóm.
 - MSSV và họ tên hai thành viên.
-- Giá trị `XX` đã chọn.
 - Giá trị `XX = 90` và domain `mmt-90.com`.
 - Phiên bản Cisco Packet Tracer thực tế sử dụng.
 

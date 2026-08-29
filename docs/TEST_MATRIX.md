@@ -6,16 +6,16 @@
 |---:|---|---|---|---|---|---|---|
 | 1 | PC-HC-01 | 172.90.10.1 | ping | Success | Chưa chạy | T01 | HUMAN_REQUIRED |
 | 2 | PC-HC-01 | PC-KT-01 | ping | Success | Chưa chạy | T02 | HUMAN_REQUIRED |
-| 3 | PC-LD-01 | 172.90.60.12 | ping | Success | Chưa chạy | T03 | HUMAN_REQUIRED |
+| 3 | PC-LD-01 | 172.90.40.4 | ping | Success | Chưa chạy | T03 | HUMAN_REQUIRED |
 | 4 | LAP-MEETING-01 | PC-HC-01 | ping | Success | Chưa chạy | T04 | HUMAN_REQUIRED |
 | 5 | LAP-STAFF-01 | PC-HC-01 | ping | Success | Chưa chạy | T05 | HUMAN_REQUIRED |
-| 6 | Một client mỗi subnet động | Không áp dụng | ipconfig /all | Đúng pool, gateway và DNS | Chưa chạy | T06A-E | HUMAN_REQUIRED |
-| 7 | PC-KT-01 | mmt-90.com | nslookup | Trả 172.90.60.12 | Chưa chạy | T07 | HUMAN_REQUIRED |
-| 8 | PC-KT-01 | www.mmt-90.com | nslookup | Trả 172.90.60.12 | Chưa chạy | T08 | HUMAN_REQUIRED |
+| 6 | Một client mỗi subnet động | Không áp dụng | ipconfig /all | Đúng pool, gateway và DNS `172.90.40.3` | DHCP đã báo success; chưa đủ 5 ảnh | T06A-E | PARTIAL |
+| 7 | PC-KT-01 | mmt-90.com | nslookup | Trả `172.90.40.4` | Chưa chạy | T07 | HUMAN_REQUIRED |
+| 8 | PC-KT-01 | www.mmt-90.com | nslookup | Trả `172.90.40.4` | Chưa chạy | T08 | HUMAN_REQUIRED |
 | 9 | Một client mỗi subnet động | http://www.mmt-90.com | Browser | Trang đúng nội dung | Chưa chạy | T09A-E | HUMAN_REQUIRED |
-| 10 | R1-R4 | Không áp dụng | show ip route | Có connected/local và đủ static route | Chưa chạy | T10A-D | HUMAN_REQUIRED |
-| 11 | R1 | 172.90.255.252 | ping | Success | Chưa chạy | T11 | HUMAN_REQUIRED |
-| 12 | LAP-MEETING-01 | Không áp dụng | ipconfig | Nhận 172.90.50.10-29/27 | Chưa chạy | T12 | HUMAN_REQUIRED |
+| 10 | R1-R4 | Không áp dụng | show ip route | R1/R2: 4 S; R3/R4: 5 S | Đúng route, mọi cổng dùng đều up/up | T10A-D | PASS |
+| 11 | R1 | 172.90.255.4 | ping | Success | Chưa chạy | T11 | HUMAN_REQUIRED |
+| 12 | LAP-MEETING-01 | Không áp dụng | ipconfig | Nhận IP thuộc `172.90.30.0/27` | Chưa chạy | T12 | HUMAN_REQUIRED |
 
 ## Luồng Simulation Mode khuyến nghị
 

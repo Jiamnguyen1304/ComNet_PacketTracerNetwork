@@ -12,6 +12,18 @@
 | 5:15-8:30 | Chạy các nhóm test trong test matrix | Duy và Khôi |
 | 8:30-9:30 | Simulation Mode và kết luận | Duy và Khôi |
 
+## Các màn hình phải chuẩn bị trước khi quay
+
+- R1 CLI tại `show ip route` và `show running-config | include helper-address`.
+- DHCP-SRV tại danh sách năm pool.
+- DNS-SRV tại A/CNAME record.
+- WEB Browser đã mở `http://www.mmt-90.com`.
+- AP-STAFF/AP-MEETING tại SSID và WPA2-PSK.
+- Một client có `ipconfig /all` đúng DNS `172.90.40.3`.
+
+Địa chỉ nói trong video phải theo topology cuối: backbone `.1-.4`, DHCP
+`172.90.40.2`, DNS `.40.3` và WEB `.40.4`.
+
 ## Checklist ghi hình
 
 - Audio nghe rõ, không có thông báo cá nhân trên màn hình.

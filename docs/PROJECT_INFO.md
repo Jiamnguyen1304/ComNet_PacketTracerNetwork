@@ -17,7 +17,7 @@
 | SSID tầng 1 | `MMT-90-STAFF` |
 | SSID tầng 3 | `MMT-90-MEETING` |
 | WPA2 passphrase lab | `MMT90@2026` |
-| Packet Tracer version | `HUMAN_REQUIRED - xem Help > About trên máy lưu topology cuối` |
+| Packet Tracer version | `Cisco Packet Tracer 9.0.1 64-bit (9.0.1.858)` |
 | Link GitHub nộp source | `https://github.com/Jiamnguyen1304/ComNet_PacketTracerNetwork` |
 | Tên file nén nếu được yêu cầu | `HUMAN_REQUIRED - xác nhận quy ước với giảng viên` |
 | Deadline | `HUMAN_REQUIRED - xác nhận trên LMS/thông báo lớp` |

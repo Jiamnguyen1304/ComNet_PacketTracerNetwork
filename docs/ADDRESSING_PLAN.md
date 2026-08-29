@@ -1,66 +1,81 @@
-# Kế hoạch địa chỉ
+# Kế hoạch địa chỉ thực tế
+
+Nguồn chuẩn của bảng này là running-config đã export từ topology hoàn chỉnh của
+Duy và ảnh cấu hình DHCP-SRV ngày 2026-08-29.
 
 ## Quy ước
 
 - Khối gốc: `172.90.0.0/16`.
-- Gateway: first usable address của mỗi subnet.
-- Host động bắt đầu từ `.10`.
-- Địa chỉ `.2-.9` dành cho AP và hạ tầng tương lai.
-- Server dùng địa chỉ `.10-.12` trong subnet server.
+- Gateway là địa chỉ usable đầu tiên của mỗi LAN.
+- Năm mạng client nhận địa chỉ động từ DHCP-SRV qua DHCP relay.
+- Ba server dùng địa chỉ tĩnh trong `172.90.40.0/28`.
+- Bốn router dùng các địa chỉ `.1-.4` của backbone `172.90.255.0/29`.
 
 ## Bảng subnet
 
 | Subnet | Khu vực | Network/prefix | Mask | Gateway | Usable range | Broadcast |
 |---|---|---|---|---|---|---|
-| ADMIN | Hành chính | `172.90.10.0/27` | `255.255.255.224` | `172.90.10.1` | `.1-.30` | `.31` |
-| STAFF | Wi-Fi tầng 1 | `172.90.20.0/27` | `255.255.255.224` | `172.90.20.1` | `.1-.30` | `.31` |
-| TECH | Kỹ thuật | `172.90.30.0/28` | `255.255.255.240` | `172.90.30.1` | `.1-.14` | `.15` |
-| MGMT | Lãnh đạo | `172.90.40.0/28` | `255.255.255.240` | `172.90.40.1` | `.1-.14` | `.15` |
-| MEETING | Wi-Fi tầng 3 | `172.90.50.0/27` | `255.255.255.224` | `172.90.50.1` | `.1-.30` | `.31` |
-| SERVER | Server room | `172.90.60.0/28` | `255.255.255.240` | `172.90.60.1` | `.1-.14` | `.15` |
-| BACKBONE | Transit router | `172.90.255.248/29` | `255.255.255.248` | Không áp dụng | `.249-.254` | `.255` |
+| ADMIN | Hành chính tầng 1 | `172.90.10.0/28` | `255.255.255.240` | `172.90.10.1` | `.1-.14` | `.15` |
+| STAFF | Wi-Fi tầng 1 | `172.90.11.0/27` | `255.255.255.224` | `172.90.11.1` | `.1-.30` | `.31` |
+| TECH | Kỹ thuật tầng 2 | `172.90.20.0/28` | `255.255.255.240` | `172.90.20.1` | `.1-.14` | `.15` |
+| MGMT | Lãnh đạo tầng 2 | `172.90.21.0/28` | `255.255.255.240` | `172.90.21.1` | `.1-.14` | `.15` |
+| MEETING | Wi-Fi phòng họp tầng 3 | `172.90.30.0/27` | `255.255.255.224` | `172.90.30.1` | `.1-.30` | `.31` |
+| SERVER | Server room tầng 4 | `172.90.40.0/28` | `255.255.255.240` | `172.90.40.1` | `.1-.14` | `.15` |
+| BACKBONE | Transit bốn router | `172.90.255.0/29` | `255.255.255.248` | Không áp dụng | `.1-.6` | `.7` |
 
 ## Địa chỉ hạ tầng
 
-| Thiết bị | Interface | IP/prefix | Gateway |
+| Thiết bị | Interface | IP/prefix | Vai trò |
 |---|---|---|---|
-| R1 | G0/0 | `172.90.10.1/27` | Connected |
-| R1 | G0/1 | `172.90.20.1/27` | Connected |
-| R1 | G0/2 | `172.90.255.249/29` | Connected |
-| R2 | G0/0 | `172.90.30.1/28` | Connected |
-| R2 | G0/1 | `172.90.40.1/28` | Connected |
-| R2 | G0/2 | `172.90.255.250/29` | Connected |
-| R3 | G0/0 | `172.90.50.1/27` | Connected |
-| R3 | G0/1 | `172.90.255.251/29` | Connected |
-| R4 | G0/0 | `172.90.60.1/28` | Connected |
-| R4 | G0/1 | `172.90.255.252/29` | Connected |
-| AP-STAFF | Management | `172.90.20.2/27` nếu hỗ trợ | `172.90.20.1` |
-| AP-MEETING | Management | `172.90.50.2/27` nếu hỗ trợ | `172.90.50.1` |
-| DHCP-SRV | Fa0 | `172.90.60.10/28` | `172.90.60.1` |
-| DNS-SRV | Fa0 | `172.90.60.11/28` | `172.90.60.1` |
-| WEB-SRV | Fa0 | `172.90.60.12/28` | `172.90.60.1` |
+| R1 | G0/0 | `172.90.10.1/28` | Gateway ADMIN |
+| R1 | G0/1 | `172.90.11.1/27` | Gateway STAFF |
+| R1 | G0/2 | `172.90.255.1/29` | Backbone |
+| R2 | G0/0 | `172.90.20.1/28` | Gateway TECH |
+| R2 | G0/1 | `172.90.21.1/28` | Gateway MGMT |
+| R2 | G0/2 | `172.90.255.2/29` | Backbone |
+| R3 | G0/0 | `172.90.30.1/27` | Gateway MEETING |
+| R3 | G0/1 | `172.90.255.3/29` | Backbone |
+| R4 | G0/0 | `172.90.40.1/28` | Gateway SERVER |
+| R4 | G0/1 | `172.90.255.4/29` | Backbone |
+| DHCP-SRV | Fa0 | `172.90.40.2/28` | DHCP tập trung |
+| DNS-SRV | Fa0 | `172.90.40.3/28` | DNS A + CNAME |
+| WEB-SRV | Fa0 | `172.90.40.4/28` | HTTP |
+
+Gateway của ba server là `172.90.40.1`. DNS dùng chung là `172.90.40.3`.
+
+## DHCP relay
+
+| Router | Interface nhận broadcast | Helper address |
+|---|---|---|
+| R1 | G0/0 ADMIN | `172.90.40.2` |
+| R1 | G0/1 STAFF | `172.90.40.2` |
+| R2 | G0/0 TECH | `172.90.40.2` |
+| R2 | G0/1 MGMT | `172.90.40.2` |
+| R3 | G0/0 MEETING | `172.90.40.2` |
+
+Năm helper đã được xác nhận từ running-config và ảnh CLI.
 
 ## DHCP scope
 
-| Pool | Start | End theo Max users | Max | Gateway | DNS |
-|---|---|---|---:|---|---|
-| POOL-ADMIN | `.10` | `.19` | 10 | `172.90.10.1` | `172.90.60.11` |
-| POOL-STAFF | `.10` | `.29` | 20 | `172.90.20.1` | `172.90.60.11` |
-| POOL-TECH | `.10` | `.14` | 5 | `172.90.30.1` | `172.90.60.11` |
-| POOL-MGMT | `.10` | `.14` | 5 | `172.90.40.1` | `172.90.60.11` |
-| POOL-MEETING | `.10` | `.29` | 20 | `172.90.50.1` | `172.90.60.11` |
+| Pool | Start đã thấy | End theo Max users | Max | Mask | Gateway | DNS |
+|---|---|---|---:|---|---|---|
+| POOL-ADMIN | `172.90.10.4` | `172.90.10.13` | 10 | `/28` | `172.90.10.1` | `172.90.40.3` |
+| POOL-STAFF | `HUMAN_REQUIRED` | Điền sau khi chọn pool trong GUI | 20 | `/27` | `172.90.11.1` | `172.90.40.3` |
+| POOL-TECH | `172.90.20.5` | `172.90.20.9` | 5 | `/28` | `172.90.20.1` | `172.90.40.3` |
+| POOL-MGMT | `172.90.21.5` | `172.90.21.9` | 5 | `/28` | `172.90.21.1` | `172.90.40.3` |
+| POOL-MEETING | `HUMAN_REQUIRED` | Điền sau khi chọn pool trong GUI | 20 | `/27` | `172.90.30.1` | `172.90.40.3` |
+
+`serverPool` là pool mặc định không xóa được của Server-PT. Nó không được dùng
+cho client vì toàn bộ thiết bị ở SERVER subnet dùng IP tĩnh; năm request từ xa
+được chọn pool theo gateway/relay information.
 
 ## Lý do chọn prefix
 
-`/27` có 30 usable host, phù hợp hai WLAN tối đa 20 client và còn không gian cho
-gateway, AP, thiết bị kiểm thử và tăng trưởng. Administration cũng dùng `/27`
-để có headroom rõ ràng cho phòng 10 người và thiết bị bổ sung.
+- `/28` có 14 địa chỉ usable. ADMIN cần 10 client và một gateway; TECH/MGMT
+  cần tối đa 5 client; SERVER cần gateway và ba server, nên `/28` đáp ứng đủ.
+- `/27` có 30 địa chỉ usable, đủ tối đa 20 wireless client, gateway và phần
+  địa chỉ dự phòng cho STAFF và MEETING.
+- `/29` có 6 địa chỉ usable, đủ bốn router backbone và còn hai địa chỉ dự phòng.
 
-`/28` có 14 usable host, đủ cho hai phòng 5 người và server room tối đa 10 host
-sau khi dành một địa chỉ gateway. `/29` có 6 usable host, đủ bốn cổng router ở
-backbone và hai địa chỉ dự phòng.
-
-Third octet theo bội số 10 giúp đọc topology và ảnh nhanh. Nhược điểm là có các
-khoảng địa chỉ không dùng giữa subnet; với khối `/16` rất lớn, nhóm chấp nhận
-đổi một phần hiệu quả địa chỉ lấy khả năng ghi nhớ và giảm lỗi thao tác.
-
+Thiết kế VLSM này tiết kiệm địa chỉ hơn việc cấp `/27` cho mọi subnet, đồng
+thời vẫn dễ nhận diện tầng qua third octet `10/11`, `20/21`, `30`, `40`.

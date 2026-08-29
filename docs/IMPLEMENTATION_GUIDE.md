@@ -1,5 +1,10 @@
 # Hướng dẫn thực hiện đồ án Packet Tracer Project 3
 
+> **Lưu ý as-built:** tài liệu này là hướng dẫn nền được viết trước khi topology
+> hoàn tất và còn dùng ký hiệu `XX`/địa chỉ ví dụ. Khi có khác biệt, luôn ưu tiên
+> `docs/ADDRESSING_PLAN.md`, running-config trong `packet-tracer/configs/` và
+> `topology.pkt`. Không copy các địa chỉ ví dụ trong guide vào report cuối.
+
 > Phạm vi: mạng văn phòng 4 tầng, nhóm 2 thành viên, Cisco Packet Tracer 8.2+.
 >
 > Trạng thái: tài liệu triển khai nền tảng; mọi `XX` và `TODO` phải được chốt trước khi nộp.

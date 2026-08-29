@@ -30,9 +30,9 @@
 
 | Vị trí | Tên | Model | Vai trò | IP |
 |---|---|---|---|---|
-| Tầng 4 | DHCP-SRV | Server-PT | 5 DHCP pool | 172.90.60.10/28 |
-| Tầng 4 | DNS-SRV | Server-PT | A + CNAME | 172.90.60.11/28 |
-| Tầng 4 | WEB-SRV | Server-PT | HTTP | 172.90.60.12/28 |
+| Tầng 4 | DHCP-SRV | Server-PT | 5 DHCP pool | 172.90.40.2/28 |
+| Tầng 4 | DNS-SRV | Server-PT | A + CNAME | 172.90.40.3/28 |
+| Tầng 4 | WEB-SRV | Server-PT | HTTP | 172.90.40.4/28 |
 
 ## End devices đề xuất
 

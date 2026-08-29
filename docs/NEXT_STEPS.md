@@ -1,210 +1,111 @@
-# Các bước còn lại để hoàn thành đồ án
+# Việc còn lại sau khi Duy hoàn tất topology
 
-Tài liệu này là checklist tích hợp từ bản `topology.pkt` hiện tại đến bản nộp.
-Không đánh dấu `PASS` nếu chưa quan sát kết quả thật trong Packet Tracer.
+Nguồn chuẩn: `topology.pkt` tại merge commit `62181f9` và chín running-config
+trong `packet-tracer/configs/`.
 
-## Trạng thái đã chuẩn bị bằng text
+## Đã hoàn thành và có bằng chứng
 
-- [x] Chốt `XX = 90` và kế hoạch địa chỉ `172.90.0.0/16`.
-- [x] Điền thông tin hai thành viên, domain và SSID.
-- [x] Soạn deployment script cho R1-R4 và năm switch trong
-  `packet-tracer/configs/`.
-- [x] Soạn cấu hình DHCP, DNS, WEB, hai AP và wireless client trong
-  `packet-tracer/configs/25127389_NguyenMinhKhoi_Services_Config.txt`.
-- [x] Hoàn thiện mã nguồn trang web tại `packet-tracer/web/index.html`.
-- [x] Chuyển test matrix về địa chỉ/domain thật và để trạng thái chưa chạy.
-- [x] Phân owner cho các ảnh cấu hình C01-C09.
+- [x] Topology vật lý bốn tầng đã dựng và lưu bằng Packet Tracer 9.0.1.
+- [x] Bốn router có đúng 10 interface IP; tất cả cổng đang dùng đều `up/up`.
+- [x] Backbone dùng `172.90.255.0/29`, R1-R4 lần lượt dùng `.1-.4`.
+- [x] Có đủ 18 static route: R1/R2 mỗi router 4, R3/R4 mỗi router 5.
+- [x] Không còn RIP/OSPF/EIGRP trong running-config.
+- [x] Có năm DHCP helper cùng trỏ đến `172.90.40.2`.
+- [x] Cả bốn router ping DHCP-SRV thành công 5/5.
+- [x] DHCP-SRV dùng `172.90.40.2/28`, gateway `.40.1`, DNS `.40.3`.
+- [x] DHCP Service On và có đủ năm pool.
+- [x] Client đã nhận DHCP thành công theo xác nhận của Khôi.
+- [x] Website source có đủ họ tên, MSSV và XX = 90.
+- [x] Chín running-config đã export và hai nhánh DuyVu/Khoi đã đồng bộ artifact.
+- [x] 13 ảnh router/helper/DHCP đã được đưa vào `report/images/`.
 
-## 1. Duy giữ topology lock và tạo checkpoint
+## Ưu tiên 1 - Xác nhận nốt thông số service
 
-Owner: Duy. Thao tác bắt buộc bằng Packet Tracer.
+Owner: Khôi. Bắt buộc thao tác trong Packet Tracer.
 
-- [ ] Pull/copy các file text mới nhất.
-- [ ] Đóng Packet Tracer trên máy còn lại để tránh hai người sửa `.pkt` đồng thời.
-- [ ] Mở `topology.pkt` và chọn `File > Save As` thành một checkpoint có thời gian,
-  ví dụ `topology-before-config-20260828.pkt` ở ngoài thư mục Git hoặc với đuôi
-  `.bak` đã được ignore.
-- [ ] Kiểm tra đúng 4 router 2911, 5 switch 2960-24TT, 2 Access Point-PT và 3
-  Server-PT.
-- [ ] Đối chiếu port thật với `docs/LOGICAL_TOPOLOGY.md`. Nếu port khác, sửa
-  dòng `interface` trong script trước khi paste; không đổi dây tùy tiện.
+- [ ] DHCP-SRV > Services > DHCP > chọn `POOL-STAFF`, chụp C05C và ghi Start IP.
+- [ ] Chọn `POOL-MEETING`, chụp C05D và ghi Start IP.
+- [ ] DNS-SRV > Desktop > IP Configuration, chụp C06A; phải là
+  `172.90.40.3/28`, gateway `172.90.40.1`.
+- [ ] DNS-SRV > Services > DNS, chụp C06B; cần A record `mmt-90.com ->
+  172.90.40.4` và CNAME `www.mmt-90.com -> mmt-90.com`.
+- [ ] WEB-SRV > Desktop > IP Configuration và Services > HTTP, chụp C07A; phải
+  dùng `172.90.40.4/28`, gateway `.40.1`, DNS `.40.3`, HTTP On.
+- [ ] AP-STAFF > Config > wireless interface, chụp C08; cần SSID
+  `MMT-90-STAFF`, WPA2-PSK/AES.
+- [ ] AP-MEETING > Config > wireless interface, chụp C09; cần SSID
+  `MMT-90-MEETING`, WPA2-PSK/AES.
 
-Điểm dừng: topology mở bình thường và đã có bản backup.
+Không cần để lộ passphrase trong report; ảnh chỉ cần chứng minh security mode.
 
-## 2. Nhập cấu hình router và switch
+## Ưu tiên 2 - Chụp DHCP của năm subnet
 
-Owner: Duy. Thao tác bắt buộc bằng CLI Packet Tracer.
+Trên một client đại diện mỗi mạng, chọn DHCP rồi chạy `ipconfig /all`.
 
-Nhập từng file vào đúng thiết bị theo thứ tự:
+| Evidence | Mạng đúng | Mask | Gateway | DNS |
+|---|---|---|---|---|
+| T06A | `172.90.10.0/28` | `255.255.255.240` | `172.90.10.1` | `172.90.40.3` |
+| T06B | `172.90.11.0/27` | `255.255.255.224` | `172.90.11.1` | `172.90.40.3` |
+| T06C | `172.90.20.0/28` | `255.255.255.240` | `172.90.20.1` | `172.90.40.3` |
+| T06D | `172.90.21.0/28` | `255.255.255.240` | `172.90.21.1` | `172.90.40.3` |
+| T06E/T12 | `172.90.30.0/27` | `255.255.255.224` | `172.90.30.1` | `172.90.40.3` |
 
-1. `SW-CORE.txt`, `SW-HC.txt`, `SW-KT.txt`, `SW-LD.txt`, `SW-SRV.txt`.
-2. `R1.txt`, `R2.txt`, `R3.txt`, `R4.txt`.
+Nếu một client nhận `169.254.x.x`, DHCP chưa thành công. Nếu nhận `172.90.x.x`
+nhưng sai third octet/gateway, client đang ở sai segment hoặc pool chọn sai.
 
-Sau mỗi router, kiểm tra:
+## Ưu tiên 3 - Chạy test chức năng T01-T12
 
-```text
-show ip interface brief
-show ip route
-show running-config
-```
+Thực hiện đúng bảng `docs/TEST_MATRIX.md` và đặt ảnh theo
+`report/SCREENSHOT_INDEX.md`.
 
-Kết quả bắt buộc:
+Thứ tự nhanh nhất:
 
-- [ ] Mọi interface đang dùng là `up/up`.
-- [ ] R1 backbone là `172.90.255.249/29`.
-- [ ] R2 backbone là `172.90.255.250/29`.
-- [ ] R3 backbone là `172.90.255.251/29`.
-- [ ] R4 backbone là `172.90.255.252/29`.
-- [ ] R1 có 4 static route, R2 có 4, R3 có 5, R4 có 5.
-- [ ] R1/R2/R3 có tổng cộng 5 `ip helper-address 172.90.60.10` trên các
-  interface LAN client.
-- [ ] Không có RIP, OSPF, EIGRP hoặc VLAN dùng để phân đoạn.
+1. T01: ADMIN ping `172.90.10.1`.
+2. T02: ADMIN ping một TECH client.
+3. T03: MGMT ping WEB-SRV `172.90.40.4`.
+4. T04: MEETING wireless client ping ADMIN client.
+5. T05: STAFF wireless client ping ADMIN client.
+6. T06A-E/T12: năm ảnh `ipconfig /all` ở mục trên.
+7. T07: `nslookup mmt-90.com` phải trả `172.90.40.4`.
+8. T08: `nslookup www.mmt-90.com` phải trả `172.90.40.4`.
+9. T09A-E: mở `http://www.mmt-90.com` từ một client của mỗi subnet.
+10. T10A-D đã có và PASS.
+11. T11: trên R1 chạy `ping 172.90.255.4`.
 
-Backbone smoke test:
+Ping đầu tiên đôi khi timeout do ARP; chạy lại trước khi kết luận FAIL.
 
-```text
-R1# ping 172.90.255.250
-R1# ping 172.90.255.251
-R1# ping 172.90.255.252
-```
+## Ưu tiên 4 - Ảnh overview và Simulation Mode
 
-Điểm dừng: cả ba ping thành công. Nếu fail, chưa cấu hình service.
+- [ ] D01: toàn cảnh topology đủ label tầng, hostname và subnet.
+- [ ] C02: zoom phần SW-CORE cho thấy bốn link router màu xanh.
+- [ ] SIM-DHCP: chuyển Simulation, lọc DHCP, renew một ADMIN client và chụp
+  chuỗi Discover/Offer/Request/ACK.
+- [ ] SIM-DNS-HTTP: lọc DNS/ARP/TCP/HTTP, mở `www.mmt-90.com` và chụp event list.
 
-## 3. Duy nhập phần cấu hình do Khôi bàn giao
+## Ưu tiên 5 - Hoàn thiện dữ liệu report trên Prism
 
-Owner nhập topology: Duy. Owner nội dung/review: Khôi.
+- [ ] Copy bảng địa chỉ từ `docs/ADDRESSING_PLAN.md`.
+- [ ] Copy phần giải thích routing/DHCP/DNS từ `report/REPORT_DRAFT_CONTENT.md`.
+- [ ] Chèn ảnh theo thứ tự trong `report/SCREENSHOT_INDEX.md` và dùng caption có
+  sẵn.
+- [ ] Điền Actual/Status thật vào `docs/TEST_MATRIX.md` sau mỗi test.
+- [ ] Dùng ba issue thật trong `docs/ISSUES.md`; bổ sung timestamp/ảnh nếu có.
+- [ ] Ghi Packet Tracer version `9.0.1.858` trong report.
+- [ ] Xuất PDF và mở lại kiểm tra ảnh, font, domain, MSSV.
 
-Mở file `packet-tracer/configs/25127389_NguyenMinhKhoi_Services_Config.txt`
-và nhập lần lượt:
+## Ưu tiên 6 - Demo và nộp
 
-1. Static IP cho DHCP-SRV, DNS-SRV và WEB-SRV.
-2. Bật DHCP và tạo đúng 5 pool.
-3. Bật DNS, tạo A record và CNAME.
-4. Bật HTTP và chép `packet-tracer/web/index.html` vào WEB-SRV.
-5. Đặt SSID, WPA2-PSK/AES cho AP-STAFF và AP-MEETING.
-6. Cho Laptop-PT/Smartphone-PT kết nối đúng SSID và nhận IP bằng DHCP.
+- [ ] Quay video 6-10 phút theo `demo/SCRIPT.md`; cả Duy và Khôi đều có audio.
+- [ ] Upload video và thử link bằng cửa sổ ẩn danh.
+- [ ] Điền link vào `demo/demo-link.txt`.
+- [ ] Save, đóng và mở lại `topology.pkt`; chạy T01, T07 và T09 làm smoke test.
+- [ ] Xác nhận deadline và quy tắc tên zip với LMS/giảng viên.
+- [ ] Đảm bảo bản nộp không còn `HUMAN_REQUIRED`, `Chưa chạy` hoặc `CẦN CHỤP`.
 
-Sau khi nhập, Khôi review trực tiếp hoặc qua ảnh:
+## Việc Codex không thể tự làm
 
-- [ ] Ba static IP server đúng `.10`, `.11`, `.12` trong `172.90.60.0/28`.
-- [ ] Mỗi DHCP pool có đúng gateway, DNS, start IP, mask và maximum users.
-- [ ] `mmt-90.com` A record trả `172.90.60.12`.
-- [ ] `www.mmt-90.com` CNAME trỏ `mmt-90.com`.
-- [ ] Website có đủ hai họ tên và MSSV.
-- [ ] Hai AP là Access Point-PT, không phải WRT300N.
-
-## 4. Cấp DHCP cho toàn bộ client
-
-Owner: Duy thao tác, Khôi kiểm tra kết quả.
-
-Trên từng PC tầng 1-3: `Desktop > IP Configuration > DHCP`.
-
-Trên wireless client: kết nối đúng SSID trước, sau đó chọn DHCP.
-
-Chọn ít nhất một client đại diện mỗi subnet và chạy `ipconfig /all`:
-
-| Subnet | Khoảng IP hợp lệ | Gateway | DNS |
-|---|---|---|---|
-| ADMIN | `172.90.10.10-19/27` | `172.90.10.1` | `172.90.60.11` |
-| STAFF | `172.90.20.10-29/27` | `172.90.20.1` | `172.90.60.11` |
-| TECH | `172.90.30.10-14/28` | `172.90.30.1` | `172.90.60.11` |
-| MGMT | `172.90.40.10-14/28` | `172.90.40.1` | `172.90.60.11` |
-| MEETING | `172.90.50.10-29/27` | `172.90.50.1` | `172.90.60.11` |
-
-Nếu một phòng có nhiều client hơn `Maximum Users` của pool thì đề xuất chỉ giữ
-đủ client cần mô phỏng hoặc tăng pool trong giới hạn usable range sau khi nhóm
-đối chiếu lại yêu cầu. Không gán IP tĩnh cho client để né lỗi DHCP.
-
-## 5. Chạy nghiệm thu theo lớp
-
-Owner: Khôi điều phối, cả hai thực hiện.
-
-Chạy đúng thứ tự để dễ xác định lỗi:
-
-1. Client ping default gateway.
-2. Client ping `172.90.60.10`, `.11`, `.12`.
-3. Client ping thiết bị ở subnet khác.
-4. `nslookup mmt-90.com`.
-5. `nslookup www.mmt-90.com`.
-6. Mở `http://www.mmt-90.com` bằng Web Browser.
-7. Chạy đủ T01-T12 trong `docs/TEST_MATRIX.md`.
-
-Sau mỗi test:
-
-- [ ] Ghi output thật vào cột `Actual`.
-- [ ] Đổi trạng thái sang `PASS` hoặc `FAIL`.
-- [ ] Chụp ảnh với đúng Evidence ID.
-- [ ] Không dùng truy cập website bằng IP làm bằng chứng T09.
-
-## 6. Chụp ảnh cấu hình và Simulation Mode
-
-Owner theo `report/SCREENSHOT_INDEX.md`.
-
-- [ ] Chụp D01 và C01-C09, giữ rõ hostname/IP/SSID.
-- [ ] Chụp T01-T12; dùng hậu tố A-E cho test nhiều subnet.
-- [ ] Lưu ảnh vào `report/images/` đúng tên trong index.
-- [ ] Cập nhật trạng thái và caption ngay sau khi chụp.
-- [ ] Simulation DHCP: ghi lại Discover, Offer, Request, ACK từ client tầng 1
-  qua R1 tới DHCP-SRV.
-- [ ] Simulation DNS/HTTP: ghi DNS query/response, TCP handshake và HTTP.
-
-## 7. Export cấu hình thật
-
-Owner: Duy. Bắt buộc sau khi topology đã pass.
-
-Trên từng router/switch:
-
-```text
-show running-config
-```
-
-Copy output thực tế và thay nội dung deployment script trong đúng 9 file:
-
-- `R1.txt`, `R2.txt`, `R3.txt`, `R4.txt`.
-- `SW-CORE.txt`, `SW-HC.txt`, `SW-KT.txt`, `SW-LD.txt`, `SW-SRV.txt`.
-
-Không export giả từ script vì running-config là bằng chứng cấu hình thật đã
-được Packet Tracer chấp nhận.
-
-## 8. Ghi ba lỗi thật
-
-Owner: cả hai.
-
-Trong lúc tích hợp, ghi ngay vào `docs/ISSUES.md`:
-
-- triệu chứng;
-- lệnh/ảnh chẩn đoán;
-- nguyên nhân gốc;
-- cách sửa;
-- kết quả retest.
-
-Không tự dùng lỗi gợi ý nếu nhóm không thật sự gặp lỗi đó.
-
-## 9. Báo cáo, demo và đóng gói
-
-Owner: cả hai. Cần con người thực hiện.
-
-- [ ] Xác nhận phiên bản trong `Help > About` và điền vào
-  `docs/PROJECT_INFO.md` cùng báo cáo Prism.
-- [ ] Xác nhận deadline và quy tắc tên file/zip với LMS hoặc giảng viên.
-- [ ] Đưa ảnh, bảng test và ba issue thật vào report trên Prism.
-- [ ] Xuất `Report.pdf`, mở lại kiểm tra font, ảnh và link.
-- [ ] Quay video 6-10 phút theo `demo/SCRIPT.md`; cả hai phải có audio.
-- [ ] Upload video, kiểm tra link trong cửa sổ ẩn danh rồi điền
-  `demo/demo-link.txt`.
-- [ ] Save `topology.pkt`, đóng Packet Tracer, mở lại file và chạy smoke test.
-- [ ] Kiểm tra bản nộp không còn `HUMAN_REQUIRED`, `Chưa chạy` hoặc `Chưa chụp`.
-- [ ] Commit/push phiên bản cuối và tạo file zip nếu đề yêu cầu.
-
-## Những việc Codex không thể tự thực hiện trong môi trường hiện tại
-
-- Mở, chỉnh và save file nhị phân `.pkt` trong giao diện Packet Tracer.
-- Xác nhận port/interface thật nếu chúng khác label trên sơ đồ.
-- Quan sát kết quả ping, DHCP, DNS, HTTP và Simulation Mode.
-- Chụp ảnh bằng chứng hợp lệ từ Packet Tracer.
-- Bịa kết quả PASS hoặc ba lỗi “đã gặp”.
-- Xác nhận Packet Tracer version đang dùng nếu chưa mở `Help > About`.
-- Truy cập report Prism của nhóm, thu âm hai thành viên hoặc upload video.
-- Xác nhận deadline/quy tắc tên file không có trong repo.
-
-Các mục trên được đánh dấu `HUMAN_REQUIRED` để nhóm xử lý bằng kết quả thật.
+- Thao tác click trong Packet Tracer và save trạng thái GUI.
+- Chạy/quan sát client DHCP, DNS, Browser và Simulation Mode thay người dùng.
+- Chụp ảnh màn hình chưa tồn tại hoặc tạo bằng chứng giả.
+- Truy cập report Prism, quay giọng hai thành viên hoặc upload video.
+- Xác nhận deadline/quy tắc tên zip nằm ngoài repository.

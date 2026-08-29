@@ -1,43 +1,57 @@
-# Issues and Resolutions
+# Issues and Resolutions đã gặp thật
 
-Báo cáo cuối cần ít nhất ba vấn đề có thật. Không bịa trước kết quả; dùng mẫu dưới
-đây trong lúc triển khai.
+## Issue 1 - Tài liệu dịch vụ lệch address plan của topology cuối
 
-## Issue 1 - HUMAN_REQUIRED: ghi lỗi thật trong lúc tích hợp
+- Thời điểm: 2026-08-29, sau khi pull bản hoàn chỉnh từ DuyVu.
+- Người phát hiện: Khôi trong quá trình kiểm tra route/DHCP.
+- Triệu chứng: file service/checklist cũ dùng SERVER `172.90.60.0/28` và
+  backbone `.249-.252`, trong khi CLI thực tế hiển thị SERVER
+  `172.90.40.0/28` và backbone `.1-.4`.
+- Phạm vi ảnh hưởng: DHCP helper, server IP, DNS A record, test matrix và số
+  liệu đưa vào report có nguy cơ sai dù topology hoạt động.
+- Chẩn đoán: đối chiếu `show ip interface brief`, `show ip route`,
+  `show running-config` của R1-R4 và ảnh DHCP-SRV.
+- Nguyên nhân gốc: hai nhánh phát triển dựa trên hai phiên bản address plan; tài
+  liệu Khôi chưa được cập nhật sau khi Duy tối ưu subnet theo tầng.
+- Cách sửa: chọn running-config/topology cuối làm nguồn chuẩn; đồng bộ toàn bộ
+  address plan, service checklist, test matrix và report draft.
+- Retest: kiểm tra tự động xác nhận 10 router interface IP, 18 static route, năm
+  helper `172.90.40.2`; tìm kiếm lại không còn địa chỉ `.60.x` trong artifact
+  nộp chính.
+- Bài học: khóa address plan trước khi cấu hình và luôn cập nhật tài liệu từ
+  as-built running-config thay vì từ bản thiết kế cũ.
 
-- Thời điểm:
-- Người phát hiện:
-- Triệu chứng:
-- Phạm vi ảnh hưởng:
-- Giả thuyết ban đầu:
-- Lệnh/ảnh chẩn đoán:
-- Nguyên nhân gốc:
-- Cách sửa:
-- Retest:
-- Bài học/phòng ngừa:
+## Issue 2 - Merge conflict khi hợp nhất bản DuyVu hoàn chỉnh
 
-## Issue 2 - HUMAN_REQUIRED: ghi lỗi thật trong lúc tích hợp
+- Thời điểm: 2026-08-29.
+- Người phát hiện: Khôi khi pull nhánh DuyVu.
+- Triệu chứng: Git báo conflict ở 9 file router/switch config và
+  `packet-tracer/web/index.html`; topology mới được stage riêng.
+- Phạm vi ảnh hưởng: không thể hoàn tất merge/push lên Khoi nếu chưa chọn nguồn
+  đúng cho artifact cấu hình.
+- Nguyên nhân gốc: Khôi đã chuẩn bị deployment script trong khi Duy export
+  running-config thật vào cùng các path.
+- Cách sửa: giữ phiên bản DuyVu cho topology, chín running-config và website;
+  giữ tài liệu/checklist riêng của Khôi; tạo merge commit `62181f9`.
+- Retest: so sánh các artifact do Duy sở hữu giữa `origin/DuyVu` và
+  `origin/Khoi` không còn khác biệt; push Khoi thành công.
+- Bài học: tách deployment script khỏi thư mục running-config hoặc thống nhất
+  owner file trước khi hai người cùng chỉnh.
 
-- Thời điểm:
-- Người phát hiện:
-- Triệu chứng:
-- Phạm vi ảnh hưởng:
-- Giả thuyết ban đầu:
-- Lệnh/ảnh chẩn đoán:
-- Nguyên nhân gốc:
-- Cách sửa:
-- Retest:
-- Bài học/phòng ngừa:
+## Issue 3 - Không thể xóa pool mặc định serverPool
 
-## Issue 3 - HUMAN_REQUIRED: ghi lỗi thật trong lúc tích hợp
-
-- Thời điểm:
-- Người phát hiện:
-- Triệu chứng:
-- Phạm vi ảnh hưởng:
-- Giả thuyết ban đầu:
-- Lệnh/ảnh chẩn đoán:
-- Nguyên nhân gốc:
-- Cách sửa:
-- Retest:
-- Bài học/phòng ngừa:
+- Thời điểm: 2026-08-29 khi kiểm tra DHCP-SRV.
+- Người phát hiện: Khôi.
+- Triệu chứng: nút `Remove` bị khóa đối với `serverPool`; pool hiển thị gateway
+  và DNS `0.0.0.0`, start address `172.90.40.0` và maximum users 512.
+- Phạm vi ảnh hưởng: có thể gây nhầm rằng DHCP Server đang có pool thừa hoặc
+  không hợp lệ.
+- Nguyên nhân gốc: `serverPool` là pool mặc định do Server-PT tạo và không cho
+  xóa trong phiên bản Packet Tracer đang dùng.
+- Cách xử lý: giữ nguyên pool mặc định; không có dynamic client trong SERVER
+  subnet; năm client subnet từ xa được ánh xạ vào năm custom pool thông qua
+  DHCP relay.
+- Retest: DHCP Service vẫn On, đủ năm custom pool và client nhận địa chỉ
+  `172.90.x.x` thành công.
+- Bài học: phân biệt artifact mặc định của simulator với pool nghiệp vụ; dùng
+  kết quả lease thực tế để xác nhận thay vì cố xóa thành phần hệ thống.
